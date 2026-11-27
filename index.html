@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#f6f3f2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="เว็บไซต์สภานักเรียนโรงเรียนถาวรานุกูล ข่าว นโยบาย และช่องทางแจ้งปัญหา">
+<title>สภานักเรียนถาวรานุกูล</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a school locker wall. Each section is a locker panel; content sits on taped sticky notes, like the party logo. */
+:root{
+  --locker:#231a1f;      /* locker at night */
+  --locker-deep:#33262c; /* vents and panel seams */
+  --note:#2f252a;        /* sticky-note paper, dimmed */
+  --ink:#f8eef2;         /* chalk white text */
+  --ink-soft:#c8b3bd;
+  --pink:#ff9cc0;        /* pixel letters in the logo */
+  --berry:#ff8fb9;       /* text-safe pink */
+  --hard:#120b0f;        /* outline on pink display text */
+  --pop:#a8336a;         /* hard drop shadow */
+  --tape:rgba(255,255,255,.14);
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 12px 26px -12px rgba(0,0,0,.75);
+  --display:"Mali","IBM Plex Sans Thai Looped",system-ui,sans-serif;
+  --body:"IBM Plex Sans Thai Looped","Mitr",system-ui,sans-serif;
+  --pixel:"Silkscreen",ui-monospace,monospace;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--locker);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--locker)}
+a{color:inherit}
+img{max-width:100%}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.25;text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto}
+.pixel{font-family:var(--pixel);letter-spacing:.06em}
+.eyebrow{font-family:var(--body);font-weight:600;font-size:.85rem;letter-spacing:.08em;color:var(--berry);text-transform:uppercase}
+
+/* sticky note + tape */
+.note{position:relative;background:var(--note);box-shadow:var(--shadow);border-radius:3px}
+.note.tape::before{content:"";position:absolute;top:-11px;left:50%;width:84px;height:22px;transform:translateX(-50%) rotate(-3deg);
+  background:var(--tape);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(2px)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px))) calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--locker) 88%,transparent);backdrop-filter:blur(10px);border-bottom:2px solid var(--locker-deep)}
+.nav .wrap{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;min-width:0}
+.brand .mark{border-radius:50%!important;transform:none!important;object-fit:cover;background:#fff;padding:0;display:grid;place-items:center;font:700 1rem var(--display);color:#1c1418;background:var(--pink);border:2px solid var(--ink);flex:none;width:40px;height:40px;border-radius:6px;transform:rotate(-4deg);box-shadow:var(--shadow)}
+.brand b{font-family:var(--display);font-weight:600;font-size:1.1rem;white-space:nowrap}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;padding:6px 12px;border-radius:999px;font-weight:500;font-size:.95rem}
+.nav-links a:hover,.nav-links a.active{background:var(--note);color:var(--berry)}
+.ig{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:.9rem;padding:7px 14px;border-radius:999px;background:var(--ink);color:var(--note)}
+.ig svg{width:15px;height:15px}
+.menu-btn{display:none;background:none;border:2px solid var(--ink);border-radius:8px;padding:6px 10px;font:600 .9rem var(--body);color:var(--ink);cursor:pointer}
+@media (max-width:1100px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--note);padding:10px max(16px,env(safe-area-inset-left,0px));box-shadow:var(--shadow)}
+  .nav-links.open{display:flex}
+  .menu-btn{display:block}
+  .nav .ig span{display:none}
+}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-copy{min-width:0}
+.hero h1{font-size:clamp(3.2rem,9vw,6.4rem);line-height:1.05;margin:14px 0 18px;letter-spacing:-.01em}
+.hero h1 .px{display:block;color:var(--pink);-webkit-text-stroke:2px var(--hard);paint-order:stroke fill;text-shadow:5px 5px 0 var(--pop)}
+.tagline{font-size:1.25rem;color:var(--ink-soft);max-width:30ch}
+.tagline strong{color:var(--ink);white-space:nowrap}
+.slogan{margin-top:18px;display:inline-block;background:var(--ink);color:var(--note);padding:6px 14px;font-family:var(--display);font-size:1.05rem;transform:rotate(-1deg)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:10px;border:2px solid var(--ink);transition:transform .15s,box-shadow .15s}
+.btn.primary{background:var(--pink);color:#1c1418;box-shadow:4px 4px 0 var(--pop)}
+.btn.primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--pop)}
+.btn.ghost{background:var(--note)}
+.btn.ghost:hover{color:var(--berry)}
+
+.hero-art{position:relative;min-width:0;display:grid;justify-items:center}
+.logo-note{width:min(360px,100%);padding:14px;transform:rotate(3deg)}
+.council-card .cc-inner{aspect-ratio:1;display:grid;place-content:center;gap:6px;text-align:center;background:var(--locker);border-radius:2px;border:2px dashed var(--locker-deep)}
+.council-card .cc-logo{width:42%;aspect-ratio:1;border-radius:50%;justify-self:center;margin-bottom:6px;box-shadow:var(--shadow)}
+.cc-top,.cc-year{font-size:.8rem;color:var(--ink-soft)}
+.cc-name{font:700 clamp(2.2rem,6vw,3rem)/1.1 var(--display);color:var(--pink);-webkit-text-stroke:1.5px var(--hard);paint-order:stroke fill;text-shadow:3px 3px 0 var(--pop)}
+.cc-school{font:600 1.15rem var(--display)}
+.logo-note img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px}
+.clip{position:absolute;top:-18px;left:28px;width:22px;height:58px;border:3px solid #9aa1aa;border-radius:12px;transform:rotate(-14deg)}
+.ballot{display:block;text-decoration:none;color:inherit;transition:transform .15s;position:relative;margin-top:-40px;margin-left:min(42%,180px);width:min(240px,80%);padding:16px 18px;transform:rotate(-4deg);border:2px dashed var(--locker-deep)}
+.ballot .row{display:flex;align-items:center;gap:12px}
+.ballot:hover{transform:rotate(-2deg) translateY(-2px)}
+.ballot .box{width:46px;height:46px;border:3px solid var(--ink);display:grid;place-items:center;font:700 1.4rem var(--pixel);color:var(--berry);flex:none}
+.ballot small{display:block;font-size:.78rem;color:var(--ink-soft);line-height:1.4}
+.ballot b{font-family:var(--display);font-size:1.15rem}
+
+/* thanks strip */
+.thanks{padding-block:8px 40px}
+.thanks .note{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:26px 30px;transform:rotate(-.6deg)}
+.votes{text-align:center}
+.votes .num{font:700 clamp(3rem,8vw,4.6rem)/1 var(--pixel);color:var(--berry);font-variant-numeric:tabular-nums}
+.votes .lbl{font-size:.85rem;color:var(--ink-soft)}
+.thanks h2{font-size:1.4rem;margin-bottom:6px}
+.thanks h2 span{font:400 .8rem var(--body);color:var(--ink-soft);margin-left:6px}
+.thanks p{color:var(--ink-soft);max-width:60ch}
+.thanks .sign{margin-top:8px;color:var(--berry);font-family:var(--display)}
+
+/* sections */
+section{scroll-margin-top:80px}
+.panel{padding-block:72px;border-top:2px solid var(--locker-deep);
+  background-image:repeating-linear-gradient(180deg,transparent 0 10px,var(--locker-deep) 10px 13px);background-size:70px 64px;background-repeat:no-repeat;background-position:right 0 top 26px}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end;margin-bottom:40px}
+.head h2{font-size:clamp(2rem,5vw,3rem);margin-top:8px}
+.head p{color:var(--ink-soft);max-width:44ch}
+
+/* members */
+.members{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 28px}
+.member{padding:12px 12px 18px}
+.member:nth-child(3n+1){transform:rotate(-1.4deg)}
+.member:nth-child(3n+2){transform:rotate(.8deg)}
+.member:nth-child(3n){transform:rotate(-.4deg)}
+.photo{aspect-ratio:1;max-width:100%;background:var(--locker-deep);border-radius:2px;overflow:hidden;display:grid;place-items:center}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+/* ซูมรูปให้หน้าอยู่กลางกรอบ: --z = ขยายกี่เท่า, --x/--y = เลื่อนรูป (ติดลบ = เลื่อนซ้าย/ขึ้น) */
+.members .photo img{transform-origin:0 0;transform:translate(var(--x,0%),var(--y,0%)) scale(var(--z,1))}
+.photo .mono{font:600 3rem var(--display);color:var(--note)}
+.member .role{margin-top:14px;font-weight:600;font-size:.85rem;color:var(--berry)}
+.member h3{font-size:1.15rem;margin-top:2px}
+.member p{font-size:.9rem;color:var(--ink-soft)}
+.roster{display:flex;justify-content:center;margin-top:40px}
+
+/* policies */
+.policies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.policy{padding:0}
+.policy summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;padding:20px 22px}
+.policy summary::-webkit-details-marker{display:none}
+.policy .ic{width:52px;height:52px;display:grid;place-items:center;font-size:1.6rem;background:var(--locker);border-radius:10px}
+.policy h3{font-size:1.15rem}
+.policy .short{font-size:.92rem;color:var(--ink-soft);line-height:1.6}
+.policy .plus{font:700 1.4rem var(--pixel);color:var(--berry);transition:transform .2s}
+.policy[open] .plus{transform:rotate(45deg)}
+.policy .more{padding:0 22px 22px 90px;color:var(--ink)}
+.policy:hover{box-shadow:0 1px 0 rgba(28,20,24,.06),0 16px 30px -14px rgba(80,30,50,.45)}
+
+/* vision */
+.vision{text-align:center}
+.vision .eyebrow{display:block}
+.quote{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,4.6vw,3rem);line-height:1.35;margin:18px auto 24px;max-width:22ch;text-wrap:balance}
+.quote em{font-style:normal;color:var(--berry);background:linear-gradient(transparent 62%,color-mix(in srgb,var(--pink) 45%,transparent) 62%)}
+.vision .copy{max-width:62ch;margin:0 auto;color:var(--ink-soft)}
+.vision .actions{justify-content:center}
+.wave{display:block;width:100%;max-width:720px;height:60px;margin:36px auto 0}
+.wave path{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:6 8}
+.wave circle{fill:var(--pink);stroke:var(--ink);stroke-width:2}
+
+/* report form */
+.report-form{max-width:720px;margin:0 auto;padding:28px 26px;display:grid;gap:18px}
+.report-form label{display:grid;gap:6px;font-weight:600;font-size:.95rem}
+.report-form label small{font-weight:400;color:var(--ink-soft)}
+.report-form select,.report-form textarea,.report-form input{font:400 1rem var(--body);color:var(--ink);background:var(--locker);border:2px solid var(--locker-deep);border-radius:10px;padding:10px 12px;width:100%}
+.report-form select:focus,.report-form textarea:focus,.report-form input:focus{border-color:var(--berry);outline:none}
+.report-form textarea{min-height:130px;resize:vertical}
+.report-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.report-form .btn{justify-self:start;cursor:pointer;font:600 1rem var(--body)}
+.report-promise{list-style:none;margin:0 auto 34px;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:720px}
+.report-promise li{display:inline-flex;align-items:center;gap:8px;background:var(--note);border:2px solid var(--locker-deep);border-radius:999px;padding:6px 16px;font-weight:600;font-size:.92rem}
+.report-promise li:nth-child(odd){transform:rotate(-1deg)}
+.report-promise li:nth-child(even){transform:rotate(1deg)}
+.report-hint{font-size:.9rem;color:var(--ink-soft);background:var(--locker);border-left:3px solid var(--berry);border-radius:6px;padding:8px 12px}
+.report-hint b{color:var(--ink)}
+.report-msg:empty{display:none}
+.report-care{font-size:.88rem;color:var(--ink-soft);border-top:2px dashed var(--locker-deep);padding-top:14px}
+.report-care a{color:var(--berry);font-weight:600}
+.report-msg{font-size:.95rem;color:var(--berry);min-height:1.5em}
+@media (max-width:600px){.report-form{padding:22px 16px}.report-form .row2{grid-template-columns:1fr}}
+
+footer{padding-block:36px 48px;border-top:2px solid var(--locker-deep)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+footer .fb{font-family:var(--display);font-weight:600;font-size:1.2rem}
+footer small{font-family:var(--pixel);font-size:.7rem;color:var(--ink-soft);letter-spacing:.1em}
+.share{font:600 .9rem var(--body);background:var(--note);color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:7px 16px;cursor:pointer}
+
+@media (max-width:860px){
+  .head{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-art{margin-top:10px}
+  .members{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .policies{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .members{grid-template-columns:1fr 1fr;gap:24px 14px}
+  .member h3{font-size:1rem}
+  .thanks .note{grid-template-columns:1fr;text-align:center}
+  .thanks p{margin-inline:auto}
+  .policy summary{grid-template-columns:44px 1fr auto;gap:12px;padding:16px}
+  .policy .ic{width:44px;height:44px}
+  .policy .more{padding:0 16px 18px 72px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.wave animateMotion{display:none}}
+
+
+/* phone polish */
+@media (max-width:600px){
+  .hero{padding-block:32px 24px}
+  .hero .wrap{gap:28px}
+  .hero h1{font-size:clamp(3rem,16vw,4.2rem);margin:10px 0 14px}
+  .hero h1 .px{-webkit-text-stroke:1.5px var(--hard);text-shadow:3px 3px 0 var(--pop)}
+  .tagline{font-size:1.05rem}
+  .slogan{font-size:.95rem}
+  .actions .btn{flex:1 1 auto;justify-content:center;padding:11px 14px}
+  .logo-note{width:min(270px,78%);padding:10px}
+  .hero-art{justify-items:center;padding-inline:8px}
+  .ballot{margin-top:-28px;margin-left:30%;width:min(220px,70%)}
+  .eyebrow .long{display:none}
+}
+
+/* tablet portrait (iPad): keep the hero side by side, tighter */
+@media (min-width:701px) and (max-width:1100px){
+  .hero .wrap{grid-template-columns:1.1fr .9fr;gap:32px}
+  .hero h1{font-size:clamp(3.4rem,9.5vw,5.4rem)}
+  .tagline{font-size:1.1rem}
+  .logo-note{width:min(320px,100%)}
+  .ballot{margin-left:24%;width:min(230px,90%)}
+  .members,.events,.people{gap:28px 20px}
+}
+/* ---------- effects ---------- */
+@keyframes slap{0%{opacity:0;translate:0 -40px;scale:1.12}60%{opacity:1;translate:0 4px;scale:.98}100%{opacity:1;translate:0 0;scale:1}}
+@keyframes sway{0%,100%{transform:rotate(3deg)}50%{transform:rotate(1deg)}}
+@keyframes wobble{0%,100%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-1px)}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35) rotate(-8deg)}100%{transform:scale(1)}}
+@keyframes heart{0%{opacity:1;transform:translate(-50%,-50%) scale(.6)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.1) rotate(var(--rot))}}
+@keyframes shine{0%{transform:translateX(-120%) rotate(20deg)}100%{transform:translateX(320%) rotate(20deg)}}
+
+.logo-note{animation:sway 6s ease-in-out infinite;transform-origin:40px 0}
+.logo-note::after{content:"";position:absolute;inset:0;overflow:hidden;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent) no-repeat;background-size:30% 100%;background-position:-50% 0;transition:background-position .9s}
+.logo-note:hover::after{background-position:160% 0}
+.hero h1 .px{display:block;transition:transform .2s}
+
+
+/* notes lift and straighten a little on hover */
+.member,.event,.person,.policy,.stat,.ballot{transition:transform .25s cubic-bezier(.2,.8,.3,1.3),box-shadow .25s}
+.member:hover,.event:hover,.person:hover,.stat:hover{transform:rotate(0) translateY(-6px) scale(1.02)!important;box-shadow:0 2px 0 rgba(28,20,24,.06),0 22px 34px -16px rgba(80,30,50,.5)}
+.note.tape::before{transition:transform .25s}
+.note.tape:hover::before{transform:translateX(-50%) rotate(4deg) translateY(-2px)}
+.policy[open] .ic{animation:pop .45s ease}
+.policy:hover .ic{transform:rotate(-8deg)}
+.policy .ic{transition:transform .2s}
+
+/* notes stick on as they scroll in (only ones below the first screen) */
+.fx-wait{opacity:0}
+.fx-in{animation:slap .55s cubic-bezier(.2,.9,.3,1.2) both}
+
+/* click/tap hearts */
+.fx-heart{position:fixed;z-index:80;pointer-events:none;font:700 16px var(--pixel);color:var(--berry);animation:heart .8s ease-out forwards}
+
+@media (prefers-reduced-motion:reduce){
+  .logo-note,.hero h1:hover .px,.policy[open] .ic{animation:none}
+  .fx-wait{opacity:1}.fx-in{animation:none}
+  .member:hover,.event:hover,.person:hover,.stat:hover{transform:none!important}
+}
+.hero h1 .nw{white-space:nowrap}
+@media (max-width:520px){.hero h1{font-size:clamp(2.4rem,12.5vw,3.2rem)}}
+/* จอกว้าง: ขยายเนื้อหาให้เต็มขึ้น อ่านสบายขึ้น */
+@media (min-width:1300px){
+  .wrap{max-width:1320px}
+  body{font-size:17px}
+  .tagline{max-width:40ch;font-size:1.35rem}
+  .logo-note{width:min(420px,100%)}
+  .ballot{width:min(280px,80%)}
+}
+.ballot b{white-space:nowrap}
+.hero h1{margin-bottom:clamp(22px,3vw,40px)}
+/* ทีมสภาฯ: รูปเล็กลง เรียง 6 คนในแถวเดียวบนจอคอม */
+@media (min-width:1001px){
+  .members{grid-template-columns:repeat(6,minmax(0,1fr));gap:24px 18px}
+  .member{padding:8px 8px 12px}
+  .member .role{margin-top:10px;font-size:.75rem;line-height:1.4}
+  .member h3{font-size:.95rem}
+  .member p{font-size:.8rem}
+}
+@media (min-width:701px) and (max-width:1000px){.members{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* ===== ธีมทางการ: กรมท่าเข้ม + ทอง (ทับสไตล์เดิมด้านบน) ===== */
+:root{
+  --locker:#0b1120;      /* พื้นหลัง กรมท่าเข้ม */
+  --locker-deep:rgba(212,175,106,.18); /* เส้นแบ่งสีทองจาง */
+  --note:#111a2e;        /* การ์ด */
+  --ink:#f4efe4;         /* ตัวหนังสือ สีงาช้าง */
+  --ink-soft:#a7afc2;
+  --pink:#d4af6a;        /* ทอง */
+  --berry:#dcbb7c;       /* ทองสำหรับตัวหนังสือ */
+  --gold-deep:#a8823f;
+  --hard:transparent;--pop:transparent;--tape:transparent;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 18px 40px -24px rgba(0,0,0,.8);
+  --display:"IBM Plex Sans Thai","IBM Plex Sans Thai Looped",system-ui,sans-serif;
+  --pixel:var(--body);
+}
+body{background:radial-gradient(1200px 600px at 75% -10%,rgba(212,175,106,.10),transparent 60%),var(--locker);background-attachment:fixed}
+h1,h2,h3{font-weight:600;letter-spacing:0}
+.eyebrow{font-weight:500;letter-spacing:.22em;font-size:.78rem;color:var(--berry)}
+.eyebrow::before{content:"";display:inline-block;width:28px;height:1px;background:var(--pink);vertical-align:middle;margin-right:12px}
+
+/* การ์ด: เรียบ ตรง ขอบทองบาง */
+.note{border:1px solid var(--locker-deep);border-radius:6px;box-shadow:var(--shadow)}
+.note.tape::before,.clip{display:none}
+.member,.member:nth-child(n),.logo-note,.ballot,.slogan,.report-promise li,.report-promise li:nth-child(n),.thanks .note{transform:none!important;animation:none!important}
+
+/* เมนู */
+.nav{background:color-mix(in srgb,var(--locker) 90%,transparent);border-bottom:1px solid var(--locker-deep)}
+.brand b{font-weight:600;letter-spacing:.01em}
+.brand .mark{border:1px solid var(--pink)!important;box-shadow:none}
+.nav-links a{border-radius:0;padding:6px 10px;border-bottom:1px solid transparent}
+.nav-links a:hover,.nav-links a.active{background:none;color:var(--berry);border-bottom-color:var(--pink)}
+.ig{background:transparent;color:var(--berry);border:1px solid var(--pink);border-radius:4px}
+.ig:hover{background:var(--pink);color:var(--locker)}
+.menu-btn{border:1px solid var(--pink);border-radius:4px;color:var(--berry)}
+
+/* หัวเว็บ */
+.hero h1{font-weight:700;letter-spacing:-.005em}
+.hero h1 .px{-webkit-text-stroke:0!important;text-shadow:none!important;background:linear-gradient(100deg,#f3dca6 0%,#d4af6a 45%,#a8823f 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tagline{color:var(--ink-soft)}
+.tagline strong{color:var(--ink);font-weight:600}
+.btn{border-radius:4px;border:1px solid var(--pink);font-weight:500;letter-spacing:.02em;transition:background .2s,color .2s}
+.btn.primary{background:var(--pink);color:#0b1120;box-shadow:none}
+.btn.primary:hover{transform:none;box-shadow:none;background:#e2c385}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{color:var(--berry);background:rgba(212,175,106,.08)}
+
+/* การ์ดโลโก้ */
+.logo-note{padding:12px;background:linear-gradient(160deg,#141f38,#0d1528)}
+.logo-note::after{display:none}
+.council-card .cc-inner{border:1px solid var(--locker-deep);outline:1px solid rgba(212,175,106,.35);outline-offset:-8px;background:transparent}
+.council-card .cc-logo{box-shadow:0 0 0 1px var(--pink),0 12px 30px -10px rgba(0,0,0,.8)}
+.cc-top,.cc-year{letter-spacing:.3em;color:var(--berry);font-size:.72rem}
+.cc-name{-webkit-text-stroke:0!important;text-shadow:none!important;color:var(--ink);font-weight:600}
+.cc-school{color:var(--ink-soft);font-weight:500}
+.ballot{border:1px solid var(--locker-deep);margin-top:-30px}
+.ballot:hover{border-color:var(--pink)}
+.ballot .box{border:1px solid var(--pink);border-radius:50%;font-size:1.1rem}
+
+/* หัวข้อแต่ละส่วน */
+.panel{background-image:none;border-top:1px solid var(--locker-deep);padding-block:88px}
+.head h2{font-weight:600}
+
+/* ทีม */
+.photo{border-radius:4px;background:#0d1528}
+.member .role{color:var(--berry);font-weight:500;letter-spacing:.02em}
+.member:hover,.person:hover,.event:hover,.stat:hover{transform:translateY(-4px)!important;box-shadow:0 24px 40px -24px rgba(0,0,0,.9);border-color:rgba(212,175,106,.45)}
+
+/* นโยบาย */
+.policy .ic{background:transparent;border:1px solid var(--locker-deep);border-radius:50%}
+.policy:hover .ic{transform:none}
+.policy[open] .ic{animation:none}
+.policy .plus{font-weight:300;font-size:1.6rem}
+.policy:hover{border-color:rgba(212,175,106,.45)}
+
+/* แจ้งปัญหา */
+.report-promise li{border:1px solid var(--locker-deep);border-radius:4px;font-weight:500}
+.report-form select,.report-form textarea,.report-form input{border:1px solid var(--locker-deep);border-radius:4px;background:#0b1120}
+.report-form select:focus,.report-form textarea:focus,.report-form input:focus{border-color:var(--pink)}
+.report-hint{border-radius:0 4px 4px 0;border-left:2px solid var(--pink)}
+.report-care{border-top:1px solid var(--locker-deep)}
+
+/* ท้ายเว็บ */
+footer{border-top:1px solid var(--locker-deep)}
+footer small{letter-spacing:.25em}
+.share{border:1px solid var(--locker-deep);border-radius:4px;background:transparent}
+
+.person,.person:nth-child(n),.event,.event:nth-child(n){transform:none!important}
+.hero h1 .px{padding-bottom:.2em;margin-bottom:-.2em}
+.chips span{border-radius:4px!important}
+/* ไม่มีเอฟเฟกต์น่ารัก: ไม่มีหัวใจ ไม่มีเด้ง ใช้ค่อยๆ ปรากฏแทน */
+.fx-heart{display:none!important}
+@keyframes rise{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+.fx-in{animation:rise .6s ease-out both}
+@media (prefers-reduced-motion:reduce){.fx-in{animation:none}}
+/* ===== หน้าตาแบบนิตยสารกีฬา: ดำ ขาว เขียว รูปเต็มจอ (ทับสไตล์เดิมด้านบน) ===== */
+:root{
+  --locker:#0f1110;--note:#181b1a;--locker-deep:rgba(255,255,255,.09);
+  --ink:#ffffff;--ink-soft:#a9b0ad;
+  --pink:#d21f35;--berry:#ff6b7a;   /* แดง */
+  --shadow:0 24px 50px -28px rgba(0,0,0,.9);
+}
+body{background:#0f1110}
+.eyebrow{color:var(--berry)}
+.eyebrow::before{background:var(--pink)}
+.note{border-radius:18px;border:1px solid var(--locker-deep)}
+.btn{border-radius:999px;border:1px solid rgba(255,255,255,.35)}
+.btn.primary{background:#fff;color:#0f1110;border-color:#fff}
+.btn.primary:hover{background:#e9ecea}
+.btn.ghost{background:rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+.ig{border-radius:999px;border-color:rgba(255,255,255,.35);color:#fff}
+.ig:hover{background:#fff;color:#0f1110}
+.nav-links a{border-radius:999px;border-bottom:0}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.08);color:#fff}
+.photo{border-radius:12px}
+.policy .ic{border-radius:50%}
+.report-form select,.report-form textarea,.report-form input{border-radius:12px;background:#0f1110}
+.report-promise li{border-radius:999px}
+.share{border-radius:999px}
+
+/* หัวเว็บ: กรอบมน รูปเต็ม */
+.hx{padding-block:20px 40px}
+.hx-frame{position:relative;max-width:1320px;margin:0 auto;border-radius:32px;overflow:hidden;min-height:min(86vh,760px);display:flex;flex-direction:column;padding:28px clamp(20px,3.5vw,48px) 36px;
+  background:linear-gradient(90deg,rgba(10,12,11,.88) 0%,rgba(10,12,11,.6) 40%,rgba(10,12,11,.15) 65%,rgba(10,12,11,.55) 100%),linear-gradient(0deg,rgba(10,12,11,.8),transparent 45%),url("photos/hero.jpg") 30% center/cover,linear-gradient(135deg,#2a1418,#0f1110 60%);
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.9)}
+.hx-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hx-crumb{font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.hx-crumb i{font-style:normal;margin:0 6px;color:var(--berry)}
+.hx-next{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:500}
+.hx-next span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.hx-main{flex:1;display:grid;grid-template-columns:1fr minmax(260px,320px);gap:40px;align-items:end;margin-top:28px}
+.hx-small{color:rgba(255,255,255,.7);font-size:.95rem}
+.hx h1{font-size:clamp(3rem,8.5vw,7rem);line-height:1.02;margin:10px 0 22px;letter-spacing:-.02em;font-weight:700}
+.hx h1 .px{display:inline-flex;align-items:center;gap:.2em;background:none!important;-webkit-background-clip:border-box;background-clip:border-box;color:#fff!important;padding:0;margin:0}
+.hx-crest{width:.62em;height:.62em;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.15),0 10px 24px rgba(0,0,0,.5);flex:none}
+.hx .tagline{color:rgba(255,255,255,.78);max-width:36ch}
+.hx .tagline strong{color:#fff}
+.hx-stat{display:block;width:min(260px,100%);margin-top:34px;text-decoration:none;color:#fff;border-radius:18px;overflow:hidden;border:2px solid var(--pink);background:rgba(10,12,11,.55);backdrop-filter:blur(10px)}
+.hx-stat-top{display:flex;align-items:center;gap:10px;background:var(--pink);padding:10px 14px}
+.hx-stat-top img{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 2px #fff}
+.hx-stat-top svg{flex:1;height:26px}
+.hx-stat-top path{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1.6;stroke-dasharray:3 3}
+.hx-stat-top circle{fill:#fff}
+.hx-stat-body{display:block;padding:14px 18px 18px}
+.hx-stat-body b{display:block;font-size:3.2rem;line-height:1;font-weight:700;letter-spacing:-.02em}
+.hx-stat-body span{display:block;margin-top:8px;color:rgba(255,255,255,.8);font-size:.92rem;line-height:1.5}
+.hx-side{display:grid;gap:12px}
+.hx-side-head{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:1.05rem}
+.hx-side-head a{font-size:.85rem;color:rgba(255,255,255,.7);text-decoration:none}
+.hx-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;text-decoration:none;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);transition:background .2s,transform .2s}
+.hx-card:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.hx-card:nth-child(odd){background:rgba(255,255,255,.04)}
+.hx-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);font-size:1.3rem;flex:none}
+.hx-card b{display:block;font-weight:600;font-size:.98rem}
+.hx-card small{display:block;color:rgba(255,255,255,.65);font-size:.8rem;line-height:1.4}
+@media (max-width:900px){
+  .hx-main{grid-template-columns:1fr;align-items:start}
+  .hx-frame{min-height:0;border-radius:24px}
+}
+@media (max-width:600px){
+  .hx{padding-block:12px 24px}
+  .hx-frame{padding:20px 18px 24px;margin-inline:-4px}
+  .hx h1{font-size:clamp(2.4rem,12.5vw,3.4rem)}
+  .hx-crumb{font-size:.68rem;letter-spacing:.08em}
+  .hx-crumb .long,.hx-next b{display:none}
+  .hx-frame{background-position:center,center,62% center,center!important}
+  .hx-stat{width:100%}
+}
+/* รูปเต็มจอ ไม่มีขอบ */
+.hx{padding:0!important;margin-inline:-16px!important}
+.hx-frame{max-width:none;margin:0!important;border-radius:0 0 40px 40px!important;box-shadow:none;min-height:calc(100vh - 62px);padding:32px max(20px,calc((100vw - 1320px)/2 + 40px)) 44px}
+@media (max-width:600px){.hx-frame{border-radius:0 0 28px 28px!important;min-height:calc(100svh - 60px);padding:22px 18px 28px}}
+/* ===== แบบตามรูปตัวอย่าง: แถบไอคอนซ้าย + กรอบมน ===== */
+.nav .ni{display:none}
+.hx-back{display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:#fff}
+.hx-back span{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);font-size:1.3rem;line-height:1}
+.hx-back b{font-size:1.7rem;font-weight:500;letter-spacing:-.01em}
+.hx .hx-small{font-size:.9rem;color:rgba(255,255,255,.65)}
+.hx-frame{border-radius:32px!important;min-height:calc(100vh - 32px)}
+.hx-stat{border:0;background:none;backdrop-filter:none;overflow:visible}
+.hx-stat-top{border-radius:16px}
+.hx-stat-body{margin-top:8px;border:2px solid var(--pink);border-radius:18px;background:rgba(10,12,11,.35);backdrop-filter:blur(10px)}
+.hx-stat-body b{font-size:4rem}
+@media (min-width:901px){.hx-main{grid-template-columns:1fr minmax(240px,280px)}}
+.hx-top,.hx-main{width:100%;max-width:1240px;margin-inline:auto}
+.hx-main{flex:0 1 auto;margin-block:auto 0}
+.hx-frame{justify-content:space-between}
+/* เนื้อหาตรงกลาง */
+.hx-main{grid-template-columns:1fr!important;justify-items:center;gap:36px}
+.hx-copy{text-align:center;display:flex;flex-direction:column;align-items:center}
+.hx h1{display:flex;flex-direction:column;align-items:center}
+.hx .tagline{margin-inline:auto}
+.hx .actions{justify-content:center}
+.hx-stat{margin-inline:auto;text-align:left}
+.hx-side{width:100%;grid-template-columns:repeat(4,1fr)}
+.hx-side-head{grid-column:1/-1}
+@media (max-width:900px){.hx-side{grid-template-columns:1fr}}
+.hx-card{border-radius:16px}
+.hx-card:nth-child(even){background:transparent;border-color:transparent}
+@media (min-width:901px){
+  body{padding-left:92px}
+  .nav{position:fixed;left:0;top:0;bottom:0;width:76px;margin:0;padding:18px 0;border:0;background:#050605;backdrop-filter:none}
+  .nav .wrap{flex-direction:column;height:100%;gap:22px;padding:0;max-width:none}
+  .brand{margin:0}
+  .brand b{display:none}
+  .nav-links{flex-direction:column;gap:14px;flex-wrap:nowrap}
+  .nav-links a{display:grid;place-items:center;width:44px;height:44px;padding:0!important;border-radius:50%!important;background:rgba(255,255,255,.1);color:#fff}
+  .nav-links a.active,.nav-links a:hover{background:#fff!important;color:#0f1110!important}
+  .nav .ni{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .nav .nl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .nav .ig{margin-top:auto;width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:50%}
+  .nav .ig span{display:none}
+  .hx{margin:16px 0 0 -16px!important}
+  .hx-frame{padding:30px 44px 40px 40px}
+}
+@media (max-width:900px){
+  .hx{margin:12px 0 0!important}
+  .hx-frame{border-radius:26px!important;min-height:0}
+  .hx-back b{font-size:1.25rem}
+}
+@media (max-width:600px){.hx-frame{padding:20px 18px 24px}}
+/* แถวล่าง: การ์ด 32 + นโยบาย */
+@media (min-width:901px){
+  .hx h1{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:0 .25em;font-size:clamp(3.4rem,7.4vw,8.4rem);margin-bottom:34px;text-shadow:0 6px 30px rgba(0,0,0,.45)}
+  .hx .tagline{font-size:1.15rem;max-width:44ch}
+  .hx-main{gap:44px}
+  .hx-side{grid-template-columns:240px repeat(4,1fr);align-items:stretch;gap:14px}
+  .hx-side .hx-stat{grid-row:2/4;margin:0;width:auto;display:flex;flex-direction:column}
+  .hx-side .hx-stat-body{flex:1}
+  .hx-side-head{grid-column:2/-1}
+  .hx-side .hx-card{flex-direction:column;align-items:flex-start;justify-content:center;gap:12px;padding:20px;background:rgba(255,255,255,.1)!important;border:1px solid rgba(255,255,255,.14)!important;grid-row:3}
+}
+@media (max-width:900px){.hx-side .hx-stat{margin:0 0 4px;width:100%}}
+/* นโยบาย: การ์ดใหญ่ มีเลข */
+@media (min-width:701px){
+  .policies{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:pol;align-items:start}
+}
+.policies{counter-reset:pol}
+.policy{counter-increment:pol;position:relative;border-radius:24px!important;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015))!important;border:1px solid rgba(255,255,255,.09)!important;overflow:hidden;transition:transform .25s,border-color .25s}
+.policy:hover{transform:translateY(-4px);border-color:rgba(210,31,53,.6)!important;box-shadow:0 24px 40px -24px rgba(0,0,0,.9)}
+.policy summary{display:flex!important;flex-direction:column;align-items:flex-start;gap:14px;padding:24px 24px 26px!important;min-height:230px;position:relative}
+.policy summary::before{content:counter(pol,decimal-leading-zero);position:absolute;right:20px;bottom:6px;font-size:5.2rem;font-weight:700;line-height:1;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.14);pointer-events:none}
+.policy .ic{width:56px!important;height:56px!important;background:rgba(255,255,255,.08)!important;border:0!important;font-size:1.6rem}
+.policy h3{font-size:1.2rem;margin-top:auto}
+.policy .short{display:block;margin-top:6px;font-size:.88rem}
+.policy .plus{position:absolute;top:22px;right:22px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.08);font-size:1.2rem!important;color:#fff!important}
+.policy[open] .plus{background:var(--pink)}
+.policy .more{padding:0 24px 24px!important;font-size:.92rem;color:rgba(255,255,255,.8)}
+.policy:first-child{background:linear-gradient(160deg,#d21f35,#8e0f20)!important;border-color:transparent!important}
+.policy:first-child .short{color:rgba(255,255,255,.85)}
+.policy:first-child summary::before{-webkit-text-stroke:1px rgba(255,255,255,.35)}
+@media (max-width:1100px) and (min-width:701px){.policies{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.policies{display:grid;gap:12px}.policy summary{min-height:0;padding:20px!important}.policy summary::before{font-size:3.6rem}}
+/* หน้าต่างเด้ง + ปุ่มยุบ */
+.btn,.hx-card,.hx-stat,.nav-links a,.ig,.hx-next span,.hx-back span,.policy{transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .2s,border-color .2s,box-shadow .25s}
+.btn:active,.hx-card:active,.hx-stat:active,.nav-links a:active,.ig:active,.policy:active{transform:scale(.95)!important;transition-duration:.12s}
+.pm{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(5,6,5,.55);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.pm.show{opacity:1;visibility:visible}
+.pm-box{position:relative;width:min(520px,100%);border-radius:28px;padding:34px 30px 30px;background:linear-gradient(160deg,#1e2421,#121514);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 80px -30px rgba(0,0,0,.9);transform:translateY(40px) scale(.85);opacity:0;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .3s;overflow:hidden}
+.pm.show .pm-box{transform:none;opacity:1}
+.pm-num{position:absolute;right:22px;bottom:-14px;font-size:8rem;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.12);pointer-events:none}
+.pm-ic{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:var(--pink);font-size:2.2rem;margin-bottom:18px;transform:scale(.4);transition:transform .6s .1s cubic-bezier(.34,1.56,.64,1)}
+.pm.show .pm-ic{transform:none}
+.pm h3{font-size:1.6rem;margin:0 0 6px}
+.pm .pm-short{color:var(--berry);font-size:.95rem;margin:0 0 16px}
+.pm .pm-more{color:rgba(255,255,255,.85);line-height:1.8;margin:0;position:relative}
+.pm-x{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#fff;font-size:1.3rem;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .2s}
+.pm-x:hover{background:rgba(255,255,255,.2);transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.pm-box,.pm-ic{transition:opacity .2s!important;transform:none!important}}
+/* ทีม: รูปเต็มการ์ด ชื่อทับรูป */
+.members .member{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:4/5;padding:0 0 16px!important;border-radius:24px!important;overflow:hidden;border:1px solid rgba(255,255,255,.08)!important;background:linear-gradient(160deg,#3a1d22,#121514)!important;isolation:isolate}
+.members .photo{position:absolute;top:0;left:0;right:0;aspect-ratio:1;border-radius:0!important;background:transparent!important;z-index:0}
+.members .photo .mono{color:rgba(255,255,255,.18);font-size:4rem}
+.members .member::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,10,9,.97) 0%,rgba(8,10,9,.75) 28%,transparent 55%);pointer-events:none;z-index:1}
+.members .member .role,.members .member h3,.members .member p{position:relative;z-index:2;margin:0;padding:0 16px}
+.members .member .role{align-self:flex-start;margin:0 0 8px 14px;padding:3px 10px;border-radius:999px;background:var(--pink);color:#fff!important;font-size:.72rem;font-weight:600;line-height:1.5}
+.members .member h3{font-size:1.02rem;line-height:1.35;color:#fff}
+.members .member p{margin-top:2px;font-size:.8rem;color:rgba(255,255,255,.65)}
+.members .member:hover{transform:translateY(-6px)!important;border-color:rgba(210,31,53,.6)!important}
+.members .member.lead{border-color:var(--pink)!important;box-shadow:0 0 0 1px var(--pink)}
+@media (max-width:700px){.members .member{aspect-ratio:3/4.4}.members .member .role{font-size:.66rem;margin-left:10px;padding:2px 8px}.members .member h3{font-size:.9rem;padding:0 12px}.members .member p{padding:0 12px}}
+/* ===== พื้นขาว + แดง (สีโรงเรียน) ===== */
+:root{--locker:#f6f3f2;--note:#ffffff;--locker-deep:rgba(30,10,14,.1);--ink:#1d1416;--ink-soft:#6e6265;--pink:#d21f35;--berry:#b8182c;--shadow:0 20px 40px -28px rgba(80,10,20,.35)}
+body{background:#f6f3f2;color:var(--ink)}
+.note,.person,.event{background:#fff;border:1px solid rgba(30,10,14,.08);box-shadow:0 18px 36px -30px rgba(80,10,20,.35)}
+.btn{border-color:rgba(30,10,14,.18);color:var(--ink)}
+.btn.primary{background:var(--pink);color:#fff;border-color:var(--pink)}
+.btn.primary:hover{background:#b8182c}
+.btn.ghost{background:#fff}
+.ig{border-color:rgba(30,10,14,.18);color:var(--ink)}
+.ig:hover{background:var(--pink);color:#fff;border-color:var(--pink)}
+.nav{background:rgba(255,255,255,.9);border-bottom:1px solid rgba(30,10,14,.08)}
+.nav-links a{color:var(--ink)}
+.nav-links a:hover,.nav-links a.active{background:rgba(210,31,53,.08);color:var(--pink)}
+.menu-btn{color:var(--pink);border-color:var(--pink)}
+.report-form select,.report-form textarea,.report-form input{background:#fff;color:var(--ink);border:1px solid rgba(30,10,14,.15)}
+.panel{border-color:rgba(30,10,14,.08)}
+/* นโยบาย */
+.policy{background:#fff!important;border:1px solid rgba(30,10,14,.08)!important;box-shadow:0 18px 36px -30px rgba(80,10,20,.4)}
+.policy:hover{border-color:rgba(210,31,53,.5)!important;box-shadow:0 26px 44px -26px rgba(80,10,20,.45)}
+.policy summary::before{-webkit-text-stroke:1px rgba(210,31,53,.18)}
+.policy .ic{background:rgba(210,31,53,.08)!important}
+.policy .plus{background:rgba(210,31,53,.1);color:var(--pink)!important}
+.policy[open] .plus{background:var(--pink);color:#fff!important}
+.policy .more{color:var(--ink)}
+.policy:first-child,.policy:first-child h3{color:#fff}
+.policy:first-child .ic,.policy:first-child .plus{background:rgba(255,255,255,.2)!important;color:#fff!important}
+/* หน้าต่างเด้ง */
+.pm{background:rgba(40,10,15,.35)}
+.pm-box{background:#fff;border-color:rgba(30,10,14,.08);color:var(--ink)}
+.pm-num{-webkit-text-stroke:1px rgba(210,31,53,.15)}
+.pm .pm-more{color:var(--ink)}
+.pm-x{background:rgba(30,10,14,.06);color:var(--ink)}
+/* ทีม (การ์ดรูป ยังมืดเพื่อให้อ่านชื่อได้) */
+.members .member{border-color:rgba(30,10,14,.08)!important;box-shadow:0 20px 40px -28px rgba(80,10,20,.5)}
+/* แถบไอคอนซ้าย: แดงเข้ม */
+@media (min-width:901px){
+  .nav{background:#8e0f20!important;border:0}
+  .nav-links a{background:rgba(255,255,255,.14);color:#fff}
+  .nav-links a.active,.nav-links a:hover{background:#fff!important;color:var(--pink)!important}
+  .nav .ig{color:#fff;border-color:rgba(255,255,255,.4)}
+}
+/* หัวเว็บบนรูป: ตัวหนังสือขาวเหมือนเดิม */
+.hx .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4)}
+.hx .btn.primary{background:#fff;color:var(--pink);border-color:#fff}
+.hx-frame{box-shadow:0 40px 80px -40px rgba(80,10,20,.5)}
+.hx-frame,.hx-frame h1,.hx-frame h1 span,.hx-next,.hx-back,.hx-side-head,.hx-card,.hx-stat{color:#fff}
+.photo{background:#f3e6e8!important}.photo .mono{color:rgba(210,31,53,.35)!important}
+.members .photo{background:transparent!important}
+/* แจ้งปัญหา: กรอบแดงเข้ม แบบรูปตัวอย่าง */
+#report{border:0}
+#report .wrap{position:relative;overflow:hidden;border-radius:32px;padding:clamp(28px,4vw,56px);color:#fff;
+  background:radial-gradient(circle at 85% 15%,rgba(255,107,122,.35),transparent 45%),linear-gradient(135deg,#a3142a 0%,#5e0a18 55%,#2a060c 100%);
+  box-shadow:0 40px 80px -40px rgba(80,10,20,.6);display:grid;grid-template-columns:1fr minmax(320px,520px);grid-template-rows:auto auto 1fr;gap:24px 56px;align-items:start}
+#report .wrap::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;border:1px solid rgba(255,255,255,.12);left:-140px;bottom:-200px;pointer-events:none}
+#report .head{grid-column:1;display:block;margin:0}
+#report .eyebrow{color:rgba(255,255,255,.75)}
+#report .eyebrow::before{background:#fff}
+#report h2{color:#fff;font-size:clamp(2.6rem,5.5vw,4.6rem);line-height:1.05;margin:12px 0 18px}
+#report .head p{color:rgba(255,255,255,.78);max-width:40ch;margin:0}
+#report .report-promise{grid-column:1;justify-content:flex-start;margin:0}
+#report .report-promise li{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;backdrop-filter:blur(8px)}
+#report .report-form{grid-column:2;grid-row:1/4;margin:0;max-width:none;border-radius:24px!important;padding:28px!important;background:rgba(255,255,255,.1)!important;border:1px solid rgba(255,255,255,.2)!important;backdrop-filter:blur(16px);box-shadow:none;color:#fff}
+#report .report-form label{color:#fff}
+#report .report-form small{color:rgba(255,255,255,.6)}
+#report .report-form select,#report .report-form textarea,#report .report-form input{background:rgba(255,255,255,.95);color:#1d1416;border:0;border-radius:14px}
+#report .report-hint{background:rgba(0,0,0,.2);border-left-color:#fff;color:rgba(255,255,255,.85);border-radius:12px}
+#report .report-hint b{color:#fff}
+#report .report-form .btn.primary{background:#fff;color:var(--pink);border-color:#fff;width:100%;padding-block:14px;font-size:1.05rem;justify-content:center;text-align:center}
+#report .report-form .btn.primary:hover{background:#ffe9ec}
+#report .report-care{color:rgba(255,255,255,.7);border-top-color:rgba(255,255,255,.18)}
+#report .report-care a{color:#fff}
+#report .report-msg{color:#fff}
+@media (max-width:900px){
+  #report .wrap{grid-template-columns:1fr;grid-template-rows:none;border-radius:26px;padding:26px 20px}
+  #report .report-form{grid-column:1;grid-row:auto;padding:20px!important}
+}
+
+/* หัวข้อแจ้งปัญหา: กระจกฝ้า + ลูกบอลไล่สีลอยอยู่ข้างหลัง (แบบวิดีโอ) */
+#report .gh{position:relative;isolation:isolate;padding:22px 26px 0 22px}
+#report .gh-glass{position:relative;z-index:1;padding:clamp(22px,3vw,34px);border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 30px 60px -30px rgba(30,0,8,.6)}
+#report .gh-glass h2{margin-top:10px}
+#report .gh-orb{position:absolute;z-index:0;border-radius:50%;pointer-events:none;will-change:transform}
+#report .gh-a{width:clamp(150px,18vw,230px);aspect-ratio:1;right:-6px;top:-8px;background:radial-gradient(circle at 35% 25%,#ffb36b 0%,#ff5a4e 40%,#ff2d6f 75%,#e0105a 100%);box-shadow:0 0 60px rgba(255,60,100,.45);animation:ghA 7s ease-in-out infinite alternate}
+#report .gh-b{width:clamp(56px,6vw,80px);aspect-ratio:1;left:2px;bottom:-26px;background:radial-gradient(circle at 30% 30%,#ffb36b 0%,#ff4d5e 50%,#ff2d6f 100%);box-shadow:0 0 30px rgba(255,60,100,.4);animation:ghB 6s ease-in-out infinite alternate}
+@keyframes ghA{0%{transform:translate(0,0)}100%{transform:translate(-26%,10%)}}
+@keyframes ghB{0%{transform:translate(0,0)}100%{transform:translate(18%,-14%)}}
+@media (max-width:900px){#report .gh{padding:16px 14px 0 12px}#report .gh-a{width:140px;right:-10px}}
+@media (prefers-reduced-motion:reduce){#report .gh-orb{animation:none}}
+/* กล่องเลือกหัวข้อแบบเด้ง */
+.dd{position:relative;margin-top:8px}
+.dd select{position:absolute;inset:0;opacity:0;pointer-events:none}
+.dd-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border:0;border-radius:14px;background:rgba(255,255,255,.95);color:#1d1416;font:inherit;font-size:1rem;cursor:pointer;text-align:left;transition:box-shadow .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.dd-btn:active{transform:scale(.98)}
+.dd-btn.ph{color:#8a7d80}
+.dd-btn svg{width:18px;height:18px;flex:none;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.dd.open .dd-btn{box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.dd.open .dd-btn svg{transform:rotate(180deg)}
+.dd-list{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;list-style:none;margin:0;padding:6px;border-radius:18px;background:#fff;box-shadow:0 24px 48px -16px rgba(40,5,10,.55);transform-origin:top center;transform:translateY(-10px) scale(.92);opacity:0;visibility:hidden;transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .2s,visibility .2s}
+.dd.open .dd-list{transform:none;opacity:1;visibility:visible}
+.dd-list li{padding:11px 14px;border-radius:12px;color:#1d1416;cursor:pointer;display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-6px);transition:background .15s,color .15s,opacity .3s,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.dd.open .dd-list li{opacity:1;transform:none}
+.dd-list li:hover,.dd-list li.hl{background:rgba(210,31,53,.08);color:var(--pink)}
+.dd-list li[aria-selected="true"]{background:var(--pink);color:#fff}
+.dd-list li[aria-selected="true"]::after{content:"✓"}
+@media (prefers-reduced-motion:reduce){.dd-list,.dd-list li,.dd-btn svg{transition:opacity .15s!important;transform:none!important}}
+/* ===== โหมดกลางคืน: แดงเข้มอมเทา (ไม่ดำสนิท) ===== */
+.theme-btn{display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;border:1px solid rgba(30,10,14,.18);background:#fff;color:var(--ink);cursor:pointer;transition:transform .45s cubic-bezier(.34,1.56,.64,1),background .2s}
+.theme-btn:active{transform:scale(.9)}
+.theme-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-btn .moon,[data-theme="dark"] .theme-btn .sun{display:none}
+[data-theme="dark"] .theme-btn .moon{display:block}
+[data-theme="dark"] .theme-btn{transform:rotate(-20deg)}
+html.theme-anim,html.theme-anim *{transition:background-color .45s ease,color .45s ease,border-color .45s ease!important}
+@media (min-width:901px){
+  .nav .theme-btn{margin-top:auto;width:44px;height:44px;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+  .nav .theme-btn~.ig{margin-top:0}
+}
+[data-theme="dark"]{--locker:#1c1517;--note:#271d20;--locker-deep:rgba(255,235,238,.1);--ink:#f6eeef;--ink-soft:#bfaeb2;--pink:#e2384c;--berry:#ff7f8d;--shadow:0 20px 40px -24px rgba(0,0,0,.7)}
+[data-theme="dark"] body{background:#1c1517;color:var(--ink)}
+[data-theme="dark"] .note,[data-theme="dark"] .person,[data-theme="dark"] .event{background:#271d20;border-color:rgba(255,235,238,.08);box-shadow:0 20px 40px -28px rgba(0,0,0,.7)}
+[data-theme="dark"] .btn{color:var(--ink);border-color:rgba(255,235,238,.2)}
+[data-theme="dark"] .btn.ghost{background:#271d20}
+[data-theme="dark"] .btn.primary{background:var(--pink);color:#fff;border-color:var(--pink)}
+[data-theme="dark"] .ig,[data-theme="dark"] .theme-btn{background:#271d20;color:var(--ink);border-color:rgba(255,235,238,.2)}
+[data-theme="dark"] .nav{background:rgba(28,21,23,.92)!important;border-bottom-color:rgba(255,235,238,.08)!important}
+[data-theme="dark"] .nav-links a{color:var(--ink)}
+[data-theme="dark"] .nav-links{background:#271d20}
+[data-theme="dark"] .policy{background:#271d20!important;border-color:rgba(255,235,238,.08)!important}
+[data-theme="dark"] .policy:first-child{background:linear-gradient(160deg,#d21f35,#8e0f20)!important}
+[data-theme="dark"] .policy summary::before{-webkit-text-stroke:1px rgba(255,127,141,.2)}
+[data-theme="dark"] .policy .ic{background:rgba(255,127,141,.12)!important}
+[data-theme="dark"] .policy .plus{background:rgba(255,127,141,.14);color:var(--berry)!important}
+[data-theme="dark"] .pm{background:rgba(10,5,6,.55)}
+[data-theme="dark"] .pm-box{background:#271d20;border-color:rgba(255,235,238,.1)}
+[data-theme="dark"] .pm-x{background:rgba(255,235,238,.1)}
+[data-theme="dark"] .photo{background:#33262a!important}
+[data-theme="dark"] .photo .mono{color:rgba(255,127,141,.45)!important}
+[data-theme="dark"] .members .photo{background:transparent!important}
+[data-theme="dark"] .members .member{border-color:rgba(255,235,238,.1)!important}
+[data-theme="dark"] .chips span,[data-theme="dark"] .chip{background:rgba(255,235,238,.08);color:var(--ink-soft)}
+[data-theme="dark"] .report-form select,[data-theme="dark"] .report-form textarea,[data-theme="dark"] .report-form input{background:#fff;color:#1d1416}
+[data-theme="dark"] .hx-frame{box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+@media (min-width:901px){
+  [data-theme="dark"] .nav{background:#5a0a16!important;border:0!important}
+  [data-theme="dark"] .nav-links{background:none}
+  [data-theme="dark"] .nav-links a{background:rgba(255,255,255,.12);color:#fff}
+  [data-theme="dark"] .nav .ig,[data-theme="dark"] .nav .theme-btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+}
+[data-theme="dark"] .hx .btn.primary{background:#fff;color:#d21f35;border-color:#fff}
+[data-theme="dark"] .hx .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4)}
+[data-theme="dark"] #report .report-form .btn.primary{background:#fff;color:#d21f35;border-color:#fff}
+@media (max-width:430px){.nav .wrap{gap:8px}.brand b{font-size:.92rem;overflow:hidden;text-overflow:ellipsis}.brand{min-width:0}.theme-btn,.nav .ig{width:36px;height:36px;padding:0;display:grid;place-items:center}}
+.hx-main{margin-block:auto!important}
+@media (max-width:900px){.hx-frame{min-height:min(78svh,640px)!important}}
+.hx .actions{margin-bottom:8px}
+/* ตราสภา */
+.brand .mark.council{object-fit:contain!important;background:#fff!important;padding:4px!important;border:1px solid rgba(210,31,53,.25)!important}
+.hx-crest.council{width:auto;height:.95em;border-radius:0;box-shadow:none;background:none;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 8px 18px rgba(0,0,0,.45))}
+/* ปุ่มแจ้งปัญหาลอย */
+.fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:60;display:inline-flex;align-items:center;gap:10px;padding:12px 20px 12px 14px;border-radius:999px;background:#d21f35;color:#fff!important;text-decoration:none;font-weight:600;font-size:1rem;box-shadow:0 14px 30px -10px rgba(140,15,30,.65),0 0 0 4px rgba(210,31,53,.15);transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s,visibility .3s,box-shadow .2s}
+.fab .fab-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2)}
+.fab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fab:hover{transform:translateY(-3px) scale(1.03)}
+.fab:active{transform:scale(.94)}
+.fab::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(210,31,53,.45);animation:fabPulse 2.6s ease-out infinite;pointer-events:none}
+@keyframes fabPulse{0%{box-shadow:0 0 0 0 rgba(210,31,53,.45)}70%,100%{box-shadow:0 0 0 16px rgba(210,31,53,0)}}
+.fab.hide{opacity:0;visibility:hidden;transform:translateY(20px) scale(.9)}
+@media (prefers-reduced-motion:reduce){.fab::after{animation:none}}
+@media (max-width:600px){.fab{padding:10px 16px 10px 10px;font-size:.95rem}}
+#report .report-form.flash{animation:formFlash 1.2s ease}
+@keyframes formFlash{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}40%{box-shadow:0 0 0 10px rgba(255,255,255,.25)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.hx .btn.report-cta{display:inline-flex;align-items:center;gap:8px}
+/* หัวข้อแบบปุ่มกด (แทนกล่องเลือก) */
+.tc{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tc select{position:absolute;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.tc button{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;font:inherit;font-size:.95rem;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s,border-color .2s,transform .35s cubic-bezier(.34,1.56,.64,1)}
+.tc button:hover{background:rgba(255,255,255,.2)}
+.tc button:active{transform:scale(.92)}
+.tc button[aria-checked="true"]{background:#fff;color:#d21f35;border-color:#fff;transform:scale(1.04)}
+.tc button[aria-checked="true"]::before{content:"✓"}
+.tc.err button{border-color:#ffd2d7;animation:tcShake .4s}
+@keyframes tcShake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* รูปหัวเว็บสว่าง เห็นรูปชัด */
+.hx-frame{background:radial-gradient(ellipse 55% 38% at 50% 50%,rgba(8,10,25,.42),transparent 75%),linear-gradient(180deg,rgba(10,12,30,.05) 0%,rgba(10,12,30,.12) 45%,rgba(10,12,30,.5) 100%),url("photos/hero.jpg") 30% center/cover,linear-gradient(135deg,#2a1418,#1c1517)!important}
+.hx h1,.hx .hx-small,.hx .tagline{text-shadow:0 2px 6px rgba(0,0,0,.55),0 8px 30px rgba(0,0,0,.45)}
+.hx .tagline{color:#fff}
+.hx .btn.ghost{background:rgba(0,0,0,.28)!important}
+@media (max-width:600px){.hx-frame{background-position:center,center,62% center,center!important}}
+/* ชื่อใหญ่ 2 บรรทัด: สภานักเรียน / โรงเรียนถาวรานุกูล */
+.hx h1{flex-direction:column!important;align-items:center!important;gap:0!important;line-height:1.08!important}
+.hx h1 .nw{font-size:clamp(3rem,7.6vw,8rem);letter-spacing:-.02em}
+.hx h1 .px{font-size:clamp(1.9rem,4.6vw,4.9rem);font-weight:600;letter-spacing:0;gap:.28em;margin-top:.12em!important}
+.hx h1 .px .hx-crest{height:1.25em}
+@media (max-width:600px){.hx h1 .nw{font-size:13.5vw}.hx h1 .px{font-size:7.2vw}}
+/* ===== แถบเมนูแก้วน้ำ (liquid glass) ===== */
+.lnav{--n-tint:rgba(255,255,255,.7);--n-fg:#1d1416;--n-fg-soft:rgba(29,20,22,.62);--n-on:#d21f35;--n-rim:rgba(255,255,255,.9);
+  position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:45;
+  display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;isolation:isolate;width:max-content;max-width:calc(100% - 24px);
+  font-family:inherit;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  animation:lnavIn .8s .2s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes lnavIn{from{opacity:0;transform:translate(-50%,40px) scale(.9)}to{opacity:1;transform:translate(-50%,0)}}
+[data-theme="dark"] .lnav{--n-tint:rgba(28,21,23,.74);--n-fg:#fff;--n-fg-soft:rgba(255,240,242,.68);--n-on:#ff8d99;--n-rim:rgba(255,255,255,.3)}
+.lnav-glass{position:absolute;inset:0;border-radius:inherit;z-index:-2;overflow:hidden;background:var(--n-tint);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4) brightness(1.06);backdrop-filter:blur(14px) saturate(1.4) brightness(1.06);
+  box-shadow:inset 0 1px 1px var(--n-rim),inset 0 0 0 1px rgba(255,255,255,.28),0 0 0 1px rgba(120,15,30,.08),0 16px 36px -14px rgba(90,10,22,.5),0 2px 6px rgba(90,10,22,.1)}
+.lnav[data-refract="on"] .lnav-glass{-webkit-backdrop-filter:url(#lnav-refract) blur(3px) saturate(1.4) brightness(1.06);backdrop-filter:url(#lnav-refract) blur(3px) saturate(1.4) brightness(1.06)}
+.lnav-water{position:absolute;left:-14px;top:-14px;z-index:-1;pointer-events:none}
+.lnav[data-gl="off"] .lnav-water{display:none}
+.lnav-drop{display:none;position:absolute;top:6px;bottom:6px;left:0;border-radius:999px;z-index:-1;pointer-events:none;will-change:transform,width;
+  background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.8),rgba(255,255,255,0) 55%),rgba(255,235,238,.5);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.95),inset 0 -2px 6px rgba(210,31,53,.22),inset 0 0 0 1px rgba(255,255,255,.6),0 6px 16px -6px rgba(140,15,30,.45)}
+.lnav[data-gl="off"] .lnav-drop{display:block}
+.lnav-item{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 16px;border-radius:999px;
+  color:var(--n-fg-soft);font-weight:500;font-size:.95rem;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer;transition:color .25s}
+.lnav-item:hover{color:var(--n-fg)}
+.lnav-item[aria-current]{color:var(--n-on);font-weight:600}
+.lnav-item:focus-visible{outline:2px solid var(--n-on);outline-offset:2px}
+.nv-ico{position:relative;display:inline-flex;flex:none}
+.nv-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.lnav-item[aria-current] .nv-ico svg{transform:translateY(-1px) scale(1.08)}
+.nv-door{fill:transparent}
+.nv-ico[data-fx="pop"] svg{animation:nvPop .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes nvPop{0%{transform:scale(.72)}60%{transform:scale(1.2)}100%{transform:translateY(-1px) scale(1.08)}}
+.nv-ico[data-fx="drop"] svg{animation:nvDrop .95s cubic-bezier(.4,0,.3,1) both;transform-origin:50% 100%}
+@keyframes nvDrop{0%{transform:translateY(-1px)}26%{transform:translateY(-13px) scale(.88,1.12)}46%{transform:translateY(3px) scale(1.3,.68)}62%{transform:translateY(-3px) scale(.92,1.08)}80%{transform:translateY(0) scale(1.04,.97)}100%{transform:translateY(-1px) scale(1.08)}}
+.nv-ico[data-fx="drop"]::before,.nv-ico[data-fx="drop"]::after{content:"";position:absolute;bottom:0;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:currentColor;opacity:0;pointer-events:none}
+.nv-ico[data-fx="drop"]::before{animation:nvSplashL .95s ease-out both}
+.nv-ico[data-fx="drop"]::after{animation:nvSplashR .95s ease-out both}
+@keyframes nvSplashL{0%,44%{opacity:0;transform:none}50%{opacity:.9;transform:translate(-5px,-6px)}75%,100%{opacity:0;transform:translate(-11px,1px) scale(.4)}}
+@keyframes nvSplashR{0%,44%{opacity:0;transform:none}50%{opacity:.9;transform:translate(5px,-7px)}75%,100%{opacity:0;transform:translate(12px,1px) scale(.4)}}
+.nv-ico[data-fx="spin"] svg{animation:nvSpin 1s cubic-bezier(.2,.75,.25,1) both}
+@keyframes nvSpin{0%{transform:perspective(80px) rotateY(0)}100%{transform:perspective(80px) rotateY(360deg) translateY(-1px) scale(1.08)}}
+.nv-ico[data-fx="glow"] svg{animation:nvHop .8s cubic-bezier(.3,1.4,.5,1) both;transform-origin:50% 100%}
+@keyframes nvHop{0%{transform:none}30%{transform:translateY(-5px) scale(1.04,.96)}55%{transform:translateY(0) scale(1.12,.88)}75%{transform:translateY(-2px) scale(.98,1.04)}100%{transform:translateY(-1px) scale(1.08)}}
+.nv-ico[data-fx="glow"] .nv-door{animation:nvDoor 1.3s ease both}
+@keyframes nvDoor{0%{fill:transparent}30%{fill:#ffd2d8}100%{fill:rgba(210,31,53,.3)}}
+.nv-ico[data-fx="wave"] svg{animation:nvWave .9s ease-in-out both;transform-origin:50% 92%}
+@keyframes nvWave{0%{transform:none}20%{transform:rotate(-15deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(4deg)}100%{transform:translateY(-1px) scale(1.08)}}
+/* มือถือ: ไอคอนอยู่บน ชื่ออยู่ล่าง */
+@media (max-width:640px){
+  .lnav{width:440px}
+  .lnav-item{flex:1 1 0;min-width:0;flex-direction:column;gap:4px;height:54px;padding:0 2px;font-size:11px}
+  .lnav-item[aria-current]{font-weight:700}
+  .lnav-full{display:none}
+}
+@media (prefers-reduced-motion:reduce){.lnav,.nv-ico svg,.nv-ico::before,.nv-ico::after,.nv-door{animation:none!important;transition:none}}
+/* เว้นที่ด้านล่างให้แถบเมนู + ยกปุ่มแจ้งปัญหาขึ้น */
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+@media (max-width:1100px){.fab{bottom:calc(max(18px,env(safe-area-inset-bottom,0px)) + 76px)}}
+/* ===== ปุ่มสลับกลางวัน/กลางคืน แบบแก้วน้ำ ===== */
+.ltog{--p:0;--tk-l:#efe4e5;--tk-d:#2c1f22;position:relative;display:inline-flex;align-items:center;flex:none;width:72px;height:34px;padding:3px;border:0;border-radius:999px;cursor:pointer;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  background:var(--tk-l);background:color-mix(in srgb,var(--tk-d) calc(var(--p) * 100%),var(--tk-l));
+  box-shadow:inset 0 1px 2px rgba(60,10,20,.12),0 0 0 1px rgba(30,10,14,.08);transition:background-color .3s cubic-bezier(.25,1,.5,1),box-shadow .3s}
+.ltog.on{box-shadow:inset 0 1px 2px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.12)}
+.ltog.dragging{transition:none}
+.ltog:focus-visible{outline:2px solid #d21f35;outline-offset:3px}
+.ltog-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 11px;pointer-events:none}
+.ltog-bg svg,.ltog-ic svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .3s}
+.ltog-bg svg{width:14px;height:14px}
+.ltog-bg .s{color:#b9a7aa;opacity:0;transform:scale(.75)}
+.ltog-bg .m{color:#8b7b7e;opacity:.6;transform:scale(.9)}
+.ltog.on .ltog-bg .s{opacity:.55;transform:scale(.9)}
+.ltog.on .ltog-bg .m{opacity:0;transform:scale(.75)}
+.ltog-thumb{position:relative;display:grid;place-items:center;width:40px;height:28px;border-radius:999px;background:#fff;pointer-events:none;
+  transform:translateX(calc(var(--p) * 26px));box-shadow:0 1px 4px rgba(60,10,20,.2),0 0 0 .5px rgba(0,0,0,.05);
+  transition:transform .34s cubic-bezier(.32,1.35,.55,1),background-color .22s,box-shadow .22s}
+.ltog.dragging .ltog-thumb{transition:transform .12s cubic-bezier(.2,.9,.3,1),background-color .14s,box-shadow .14s}
+.ltog.on .ltog-thumb{background:#3d292d;box-shadow:0 1px 4px rgba(0,0,0,.4),inset 0 1px .5px rgba(255,255,255,.15)}
+.ltog.press .ltog-thumb{transform:translateX(calc(var(--p) * 26px)) scale(1.24,1.3);background:rgba(255,255,255,.04);
+  -webkit-backdrop-filter:url(#ltog-lens) contrast(1.06);backdrop-filter:url(#ltog-lens) contrast(1.06);
+  box-shadow:0 0 0 1px rgba(0,0,0,.18),inset 0 1.5px 1.5px rgba(255,255,255,.95),inset 0 -1.5px 1.5px rgba(255,255,255,.65),inset 2px 0 2px rgba(255,255,255,.45),inset -2px 0 2px rgba(255,255,255,.45)}
+.ltog.press.on .ltog-thumb{box-shadow:0 0 0 1px rgba(255,255,255,.28),inset 0 1.5px 1.5px rgba(255,255,255,.95),inset 0 -1.5px 1.5px rgba(255,255,255,.65),inset 2px 0 2px rgba(255,255,255,.45),inset -2px 0 2px rgba(255,255,255,.45)}
+.ltog-ic{position:relative;width:16px;height:16px}
+.ltog-ic svg{position:absolute;inset:0;width:16px;height:16px}
+.ltog-ic .s{color:#d21f35;transform:rotate(calc(var(--p) * 90deg))}
+.ltog.on .ltog-ic .s{opacity:0;transform:rotate(90deg) scale(.5)}
+.ltog-ic .m{color:#fff;opacity:0;transform:rotate(-90deg) scale(.5)}
+.ltog.on .ltog-ic .m{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ltog,.ltog *{transition:none!important}}
+/* หัวเว็บบนมือถือ: โลโก้ ชื่อ ปุ่มสลับ และ Facebook เรียงพอดีแถวเดียว */
+@media (max-width:900px){.nav .wrap{gap:10px}.nav .ig{width:36px;height:36px;padding:0;display:grid;place-items:center;flex:none}.nav .ig span{display:none}}
+@media (max-width:380px){.nav .wrap{gap:8px}.brand b{font-size:.85rem}.brand .mark{width:36px!important;height:36px!important}}
+@media (min-width:901px){.nav .ltog{margin-top:auto;--tk-l:rgba(255,255,255,.2);--tk-d:rgba(0,0,0,.32)}.nav .ltog~.ig{margin-top:0}}
+/* photo flags wave (hero) */
+.hx-wave,.hx-shade{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hx-wave{width:100%;height:100%;opacity:0;transition:opacity .6s}
+.hx-wave.on{opacity:1}
+.hx-frame.waving>.hx-main{position:relative;z-index:1}
+/* ===== ไม่มีแถบข้าง: โลโก้มุมซ้ายบน ปุ่มมุมขวาบน + รูปเต็มจอ ===== */
+body{padding-left:max(16px,env(safe-area-inset-left,0px))!important}
+.nav{position:fixed!important;left:0;right:0;top:0;bottom:auto!important;width:auto!important;height:auto!important;margin:0!important;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left))!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:none;z-index:50}
+.nav .wrap{flex-direction:row!important;align-items:center!important;justify-content:flex-start;gap:10px!important;height:auto!important;max-width:none!important;padding:0!important}
+.nav .wrap>*{pointer-events:auto}
+.nav .nav-links,.nav .menu-btn{display:none!important}
+.nav .brand{margin:0 auto 0 0!important;padding:5px 14px 5px 5px;border-radius:999px;background:rgba(255,255,255,.82);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 8px 24px -12px rgba(40,5,10,.45),inset 0 0 0 1px rgba(255,255,255,.7);display:inline-flex;align-items:center;gap:10px;color:#1d1416!important;text-decoration:none}
+.nav .brand b{display:inline!important;font-size:.95rem;font-weight:600;color:#1d1416}
+.nav .brand .mark{width:40px!important;height:40px!important;margin:0!important}
+.nav .ltog{margin:0!important;box-shadow:0 8px 24px -12px rgba(40,5,10,.45)}
+.nav .ig{margin:0!important;width:44px!important;height:44px!important;padding:0!important;display:grid!important;place-items:center;border-radius:50%!important;background:rgba(255,255,255,.82)!important;color:#d21f35!important;border:0!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 24px -12px rgba(40,5,10,.45),inset 0 0 0 1px rgba(255,255,255,.7)}
+.nav .ig span{display:none!important}
+.nav .ig svg{width:20px;height:20px}
+[data-theme="dark"] .nav .brand,[data-theme="dark"] .nav .ig{background:rgba(28,21,23,.78)!important;box-shadow:0 8px 24px -12px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.12)}
+[data-theme="dark"] .nav .brand b{color:#fff}
+[data-theme="dark"] .nav .ig{color:#fff!important}
+@media (max-width:600px){.nav .brand b{display:none!important}.nav .brand{padding:4px}.nav .brand .mark{width:38px!important;height:38px!important}.nav .ig{width:42px!important;height:42px!important}}
+.hx{margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)))!important;padding:0!important}
+.hx-frame{margin:0!important;max-width:none!important;border-radius:0!important;box-shadow:none!important;width:100%;min-height:100vh!important;min-height:100svh!important;padding:calc(84px + env(safe-area-inset-top,0px)) max(20px,calc((100vw - 1320px)/2 + 40px)) calc(96px + env(safe-area-inset-bottom,0px))!important}
+@media (max-width:600px){.hx-frame{padding:calc(76px + env(safe-area-inset-top,0px)) 18px calc(92px + env(safe-area-inset-bottom,0px))!important;background-position:center,center,58% center,center!important}}
+html .nav,html[data-theme="dark"] .nav{background:none!important;border:0!important}
+
+/* ===== ขัดเงา 2026-11-24: เข้าหน้าเว็บแบบนุ่มนวล + เลื่อนแล้วค่อย ๆ โผล่ ===== */
+@keyframes rise{from{opacity:0;translate:0 26px;filter:blur(6px)}to{opacity:1;translate:0 0;filter:none}}
+.fx-in{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+@media (prefers-reduced-motion:reduce){.fx-wait{opacity:1!important}.fx-in{animation:none!important}}
+@keyframes hxIn{from{opacity:0;translate:0 28px;filter:blur(10px)}to{opacity:1;translate:0 0;filter:none}}
+@keyframes hxCrest{from{opacity:0;transform:scale(.4) rotate(-25deg)}to{opacity:1;transform:none}}
+@keyframes hxVeil{from{opacity:1}to{opacity:0}}
+@keyframes hxFade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  .intro .hx-frame::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,#3a0a12,#0d0406 75%);animation:hxVeil 1.5s .1s cubic-bezier(.4,0,.2,1) both}
+  .intro .hx-small,.intro .hx h1 .nw,.intro .hx h1 .px,.intro .hx .tagline,.intro .hx .actions{animation:hxIn 1.1s cubic-bezier(.2,.7,.2,1) both}
+  .intro .hx-small{animation-delay:.55s}
+  .intro .hx h1 .nw{animation-delay:.7s}
+  .intro .hx h1 .px{animation-delay:.9s}
+  .intro .hx .tagline{animation-delay:1.1s}
+  .intro .hx .actions{animation-delay:1.25s}
+  .intro .hx-crest{animation:hxCrest 1.1s 1.2s cubic-bezier(.2,.8,.25,1.3) both}
+  .intro .nav .wrap>*{animation:hxFade .9s 1.4s ease-out both}
+}
+.hx .hx-small{color:rgba(255,255,255,.82)}
+/* ===== ปุ่มหน้าแรกแบบน้ำใส (liquid glass) ===== */
+.hx .btn.lbtn,[data-theme="dark"] .hx .btn.lbtn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 26px;border-radius:999px;border:0!important;color:#fff!important;font-weight:600;letter-spacing:.01em;text-shadow:0 1px 8px rgba(0,0,0,.25);
+  background:rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(12px) saturate(1.6) brightness(1.08);backdrop-filter:blur(12px) saturate(1.6) brightness(1.08);
+  box-shadow:inset 0 1.5px 1px rgba(255,255,255,.75),inset 0 -1.5px 2px rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 -10px 18px -10px rgba(255,255,255,.35),0 14px 30px -14px rgba(0,0,0,.55);
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,background-color .3s!important}
+.hx .btn.lbtn.lbtn-red,[data-theme="dark"] .hx .btn.lbtn.lbtn-red{background:rgba(210,31,53,.5)!important;
+  box-shadow:inset 0 1.5px 1px rgba(255,255,255,.8),inset 0 -1.5px 2px rgba(255,190,198,.45),inset 0 0 0 1px rgba(255,200,206,.45),inset 0 -12px 20px -10px rgba(255,150,165,.5),0 16px 34px -14px rgba(140,10,25,.75)}
+.hx .btn.lbtn::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:radial-gradient(120% 90% at 28% -10%,rgba(255,255,255,.55),rgba(255,255,255,0) 50%),radial-gradient(60% 60% at 85% 120%,rgba(255,255,255,.22),rgba(255,255,255,0) 70%)}
+.hx .btn.lbtn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.35),rgba(255,255,255,0));transform:skewX(-18deg);animation:lbtnShine 5.5s 2.4s ease-in-out infinite}
+.hx .btn.lbtn-red::after{animation-delay:2s}
+@keyframes lbtnShine{0%,70%{left:-60%}100%{left:130%}}
+.hx .btn.lbtn:hover{transform:translateY(-2px) scale(1.03)}
+.hx .btn.lbtn:active{transform:scale(.95,.92)!important;transition-duration:.12s!important}
+.hx .btn.lbtn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.lbtn-ic{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hx .btn.lbtn:hover .lbtn-ic{transform:translateX(2px)}
+.lbtn-ic{transition:transform .3s}
+.lbtn[data-refract="on"]{-webkit-backdrop-filter:url(#lbtn-refract) blur(4px) saturate(1.6) brightness(1.08)!important;backdrop-filter:url(#lbtn-refract) blur(4px) saturate(1.6) brightness(1.08)!important}
+.lbtn-rip{position:absolute;z-index:-1;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,0) 40%,rgba(255,255,255,.55) 62%,rgba(255,255,255,0) 72%);animation:lbtnRip .75s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes lbtnRip{from{transform:scale(1);opacity:1}to{transform:scale(30);opacity:0}}
+@media (max-width:600px){.hx .btn.lbtn{padding:13px 18px;font-size:.98rem}}
+@media (prefers-reduced-motion:reduce){.hx .btn.lbtn::after,.lbtn-rip{animation:none;display:none}}
+/* ตัวปุ่มน้ำใสต้องไม่มี filter ที่กล่องแม่ ไม่งั้นแก้วจะไม่เบลอ */
+.intro .hx .actions{animation-name:lbtnIn!important;animation-fill-mode:backwards!important}
+@keyframes lbtnIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.hx .btn.lbtn:not(.lbtn-red),[data-theme="dark"] .hx .btn.lbtn:not(.lbtn-red){background:rgba(40,14,20,.2)!important;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+/* ===== ปุ่มน้ำใส: แบบใสขึ้น เห็นรูปข้างหลังชัด ตัวหนังสือยังอ่านง่าย ===== */
+.hx .btn.lbtn,[data-theme="dark"] .hx .btn.lbtn,.hx .btn.lbtn:not(.lbtn-red),[data-theme="dark"] .hx .btn.lbtn:not(.lbtn-red){
+  background:rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(1.5px) saturate(1.5) brightness(1.04)!important;backdrop-filter:blur(1.5px) saturate(1.5) brightness(1.04)!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55),0 2px 14px rgba(0,0,0,.45);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.85),inset 0 -2px 1px rgba(255,255,255,.35),inset 0 0 0 1.5px rgba(255,255,255,.55),inset 2px 0 3px -1px rgba(255,255,255,.4),inset -2px 0 3px -1px rgba(255,255,255,.4),0 10px 26px -12px rgba(0,0,0,.5)}
+.hx .btn.lbtn.lbtn-red,[data-theme="dark"] .hx .btn.lbtn.lbtn-red{background:rgba(210,31,53,.24)!important;
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.85),inset 0 -2px 1px rgba(255,170,180,.5),inset 0 0 0 1.5px rgba(255,150,165,.75),inset 2px 0 3px -1px rgba(255,200,206,.5),inset -2px 0 3px -1px rgba(255,200,206,.5),0 10px 26px -12px rgba(120,10,25,.6)}
+.hx .btn.lbtn::before{background:radial-gradient(100% 70% at 25% -15%,rgba(255,255,255,.4),rgba(255,255,255,0) 45%)}
+.lbtn[data-refract="on"]{-webkit-backdrop-filter:url(#lbtn-refract) blur(1px) saturate(1.5) brightness(1.04)!important;backdrop-filter:url(#lbtn-refract) blur(1px) saturate(1.5) brightness(1.04)!important}
+</style>
+<script>try{if(!sessionStorage.getItem("thn-intro")){document.documentElement.classList.add("intro");sessionStorage.setItem("thn-intro","1")}}catch(e){}</script>
+<script>try{if(localStorage.getItem("thn-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#home" class="brand"><img class="mark council" src="data:image/png;base64,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" alt="ตราโรงเรียนถาวรานุกูล"><b>สภานักเรียนถาวรานุกูล</b></a>
+    <button class="ltog" id="theme-btn" type="button" role="switch" aria-checked="false" aria-label="สลับโหมดกลางวัน / กลางคืน" title="โหมดกลางวัน / กลางคืน (กดหรือเลื่อน)"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ltog-lens" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.03" numOctaves="1" seed="3" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg><span class="ltog-bg" aria-hidden="true"><svg class="s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg><svg class="m" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><span class="ltog-thumb" aria-hidden="true"><span class="ltog-ic"><svg class="s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg><svg class="m" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span></span></button>
+    <a class="ig" href="https://www.facebook.com/THNSCC/" target="_blank" rel="noopener" aria-label="Facebook สภานักเรียนถาวรานุกูล">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7H16.5l.5-4h-3.5V8.8c0-.5.3-.8 1-.8z"/></svg>
+      <span>Facebook สภาฯ</span>
+    </a>
+  </div>
+</nav>
+
+<nav class="lnav" id="lnav" aria-label="เมนูหลัก">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lnav-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.02" numOctaves="2" seed="7" result="noise"/><feGaussianBlur in="noise" stdDeviation="2" result="soft"/><feDisplacementMap in="SourceGraphic" in2="soft" scale="60" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+  <span class="lnav-glass" aria-hidden="true"></span>
+  <canvas class="lnav-water" aria-hidden="true"></canvas>
+  <span class="lnav-drop" aria-hidden="true"></span>
+  <a class="lnav-item" href="#home" aria-current="page"><span class="nv-ico" data-kind="glow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.6V20h12V9.6"/><path class="nv-door" d="M10 20v-5h4v5Z"/></svg></span><span class="lnav-label">หน้าแรก</span></a>
+  <a class="lnav-item" href="#policies"><span class="nv-ico" data-kind="pop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span class="lnav-label">นโยบาย</span></a>
+  <a class="lnav-item" href="#members"><span class="nv-ico" data-kind="wave"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.9.3 5 2.6 5 5.8"/></svg></span><span class="lnav-label">ทีมสภาฯ</span></a>
+  <a class="lnav-item" href="#report"><span class="nv-ico" data-kind="drop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v4M12 14h.01"/></svg></span><span class="lnav-label">แจ้งปัญหา</span></a>
+  <a class="lnav-item" href="roster.html"><span class="nv-ico" data-kind="spin"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span><span class="lnav-label">รายชื่อ<span class="lnav-full">ทั้งหมด</span></span></a>
+</nav>
+
+<main>
+  <section class="hero hx" id="home">
+    <div class="hx-frame">
+      <canvas class="hx-wave" aria-hidden="true"></canvas><div class="hx-shade" aria-hidden="true"></div>
+      <div class="hx-main">
+        <div class="hx-copy">
+          <div class="hx-small">Student Council · ปีการศึกษา 2569</div>
+          <h1><span class="nw">สภานักเรียน</span><span class="px">โรงเรียนถาวรานุกูล<img class="hx-crest council" src="data:image/png;base64,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" alt="ตราคณะกรรมการสภานักเรียน"></span></h1>
+          <p class="tagline">ยินดีต้อนรับสู่เว็บไซต์สภานักเรียน ติดตาม<strong>นโยบาย กิจกรรม</strong> และแจ้งปัญหาถึงสภาฯ ได้ที่นี่</p>
+          <div class="actions">
+            <a href="#report" class="btn primary report-cta lbtn lbtn-red"><svg class="lbtn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v4M12 14h.01"/></svg><span>แจ้งปัญหาถึงสภาฯ</span></a>
+            <a href="#policies" class="btn ghost lbtn"><span>ดูนโยบายสภาฯ</span><svg class="lbtn-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lbtn-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="2" seed="4" result="n"/><feGaussianBlur in="n" stdDeviation="1.5" result="s"/><feDisplacementMap in="SourceGraphic" in2="s" scale="22" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="policies">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Our policies</div><h2>นโยบายสภานักเรียน</h2></div>
+      </div>
+      <div class="policies">
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">🧻</span><span><h3>สุขใดเล่า จะเท่าสุขา</h3><span class="short">ดูแลความสะดวกในห้องน้ำและอุ่นใจทุกวัน</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">มีกระดาษทิชชู่และกระดาษห่อผ้าอนามัยพร้อมใช้ในห้องน้ำหญิงตลอดเวลา</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">📻</span><span><h3>เรื่องเล่า Radio</h3><span class="short">เติมพลังเช้าให้ทุกคนด้วยเสียงเพลงและข่าวสารของโรงเรียน</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">เปิดเพลงและรับคำขอเพลงช่วงเช้าก่อน 07:40 น. พร้อมประกาศกิจกรรมและข่าวสารต่าง ๆ</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">♻️</span><span><h3>Donate Your Paper</h3><span class="short">ให้กระดาษเหลือใช้ได้ใช้งานต่ออีกครั้งอย่างคุ้มค่า</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">เปิดรับบริจาคกระดาษเหลือใช้ เพื่อนำมาทำเป็นกระดาษห่อผ้าอนามัยใช้ในโรงเรียน</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">🔗</span><span><h3>น้องขอสานต่อ</h3><span class="short">ต่อยอดสิ่งดี ๆ ที่รุ่นพี่เริ่มไว้ ไม่ให้สูญหายไปกับรุ่น</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">สานต่อนโยบายและโครงการดี ๆ ของรุ่นพี่ให้เดินหน้าต่อไปอย่างต่อเนื่อง</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">🎶</span><span><h3>Walk &amp; Vibe</h3><span class="short">ตลาดคนเดินสุดชิล พร้อมเสียงดนตรีในโรงเรียน</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">เปิดรับสมัครเพื่อน ๆ พี่น้องที่สนใจด้านการตลาดมาร่วมจัดตลาดคนเดิน พร้อมการแสดงดนตรีขนาดเล็กในโอกาสพิเศษ ให้ทุกคนได้สนุกกับบรรยากาศไปด้วยกัน</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">☂️</span><span><h3>มีร่มให้ยืม</h3><span class="short">ไม่ต้องเปียกฝนหรือทนแดด มีร่มให้ยืมในวันที่ลืม</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">จัดร่มไว้ให้นักเรียนยืมในวันฝนตก ตามเกณฑ์การยืม-แลก-คืนที่ชัดเจน</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">📸</span><span><h3>น้องส่งพี่ / Open House</h3><span class="short">สร้างความทรงจำดี ๆ ในวันสำคัญของพี่ ๆ และงานเปิดบ้าน</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">จัดโฟโต้บูธและมุมถ่ายรูปสวย ๆ ในกิจกรรมน้องส่งพี่และงาน Open House</p></details>
+        <details class="note policy"><summary><span class="ic" aria-hidden="true">💬</span><span><h3>แจ้งปัญหาผ่านเว็บไซต์</h3><span class="short">เปิดพื้นที่ให้ทุกคนกล้าพูด กล้าเล่าปัญหาที่เจอในโรงเรียน</span></span><span class="plus" aria-hidden="true">+</span></summary><p class="more">แจ้งปัญหาถึงสภาฯ ได้ง่าย ๆ ผ่านเว็บไซต์นี้ เฉพาะครูและนักเรียนถาวรานุกูล และสภาฯ อ่านทุกเรื่อง</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="members">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">The team</div><h2>ทีมสภานักเรียน</h2></div>
+      </div>
+      <div class="members">
+        <article class="note tape member lead"><div class="photo" data-initial="ณ"><img loading="lazy" decoding="async" style="--z:1.6;--x:-30%;--y:-60%" src="photos/PRES.JPG" alt="นางสาว ณิชชิศา ลักคนาศิริ"></div><div class="role">ประธานสภานักเรียน</div><h3>นางสาว ณิชชิศา ลักคนาศิริ</h3><p>ม.5/1</p></article>
+        <article class="note tape member"><div class="photo" data-initial="ร"><img loading="lazy" decoding="async" style="--z:1.6;--x:-33%;--y:-60%" src="photos/VPA.jpeg" alt="นางสาว รมณ ฟักพูล"></div><div class="role">รองประธาน ฝ่ายวิชาการ</div><h3>นางสาว รมณ ฟักพูล</h3><p>ม.5/1</p></article>
+        <article class="note tape member"><div class="photo" data-initial="ฐ"><img loading="lazy" decoding="async" style="--z:1.7;--x:-43%;--y:-70%" src="photos/VPB.jpeg" alt="นางสาว ฐาณัชชา กระต่ายทอง"></div><div class="role">รองประธาน ฝ่ายงบประมาณ</div><h3>นางสาว ฐาณัชชา กระต่ายทอง</h3><p>ม.5/1</p></article>
+        <article class="note tape member"><div class="photo" data-initial="อ"><img loading="lazy" decoding="async" style="--z:1.25;--x:-10%;--y:-25%" src="photos/VPP.jpg" alt="นางสาว อริสา อนุปัญญาวัฒน์"></div><div class="role">รองประธาน ฝ่ายบุคคล</div><h3>นางสาว อริสา อนุปัญญาวัฒน์</h3><p>ม.5/1</p></article>
+        <article class="note tape member"><div class="photo" data-initial="ธ"><img loading="lazy" decoding="async" style="--z:1.6;--x:-49%;--y:-60%" src="photos/VPG.jpeg" alt="นางสาว ธนัชพร กลั่นกลิ่นหอม"></div><div class="role">รองประธาน ฝ่ายทั่วไป</div><h3>นางสาว ธนัชพร กลั่นกลิ่นหอม</h3><p>ม.5/1</p></article>
+        <article class="note tape member"><div class="photo" data-initial="อ"><img loading="lazy" decoding="async" style="--z:1.7;--x:-40%;--y:-70%" src="photos/SEC.jpeg" alt="นางสาว อริสรา ปั้นสกุล"></div><div class="role">เลขานุการประธาน</div><h3>นางสาว อริสรา ปั้นสกุล</h3><p>ม.5/1</p></article>
+      </div>
+      <div class="roster"><a class="btn ghost" href="roster.html">ดูสมาชิกทั้งหมด 32 คน</a></div>
+    </div>
+  </section>
+
+  <section class="panel" id="report">
+    <div class="wrap">
+      <div class="head gh">
+        <span class="gh-orb gh-a" aria-hidden="true"></span><span class="gh-orb gh-b" aria-hidden="true"></span>
+        <div class="gh-glass">
+        <div><div class="eyebrow">Report</div><h2>แจ้งปัญหาถึงสภาฯ</h2></div>
+        <p>เจอปัญหาในโรงเรียน มีเรื่องหนักใจ หรือแค่อยากมีคนรับฟัง พิมพ์บอกพวกเราได้ในช่องด้านล่าง เราพร้อมฟังและช่วยหาทางแก้ไปด้วยกัน</p>
+        </div>
+      </div>
+      <ul class="report-promise">
+        <li><span aria-hidden="true">🏫</span>เฉพาะครูและนักเรียนถาวรานุกูล</li>
+        <li><span aria-hidden="true">🤍</span>สภาฯ อ่านทุกเรื่อง</li>
+      </ul>
+      <form class="note tape report-form" id="report-form">
+        <label>เรื่องเกี่ยวกับ
+          <select name="topic" required>
+            <option value="">เลือกหัวข้อ</option>
+            <option>ห้องน้ำ</option>
+            <option>อาคาร / สถานที่</option>
+            <option>การเรียน</option>
+            <option>กิจกรรม</option>
+            <option>อื่น ๆ</option>
+          </select>
+        </label>
+        <label>เล่าปัญหาให้เราฟัง
+          <textarea name="detail" required maxlength="1000" placeholder="เช่น ก๊อกน้ำห้องน้ำหญิงชั้น 2 อาคาร 3 เสีย"></textarea>
+        </label>
+        <div class="row2">
+          <label>ชั้น/ห้อง <small>(ไม่ใส่ก็ได้)</small><input name="room" maxlength="20" placeholder="เช่น ม.4/1"></label>
+          <label>ช่องทางติดต่อกลับ <small>(ไม่ใส่ก็ได้)</small><input name="contact" maxlength="60" placeholder="IG หรือ Line"></label>
+        </div>
+        <p class="report-hint">🔑 กดส่งแล้วจะไปที่ Google Form ล็อกอินด้วย<b>เมลโรงเรียน</b> แล้วกด "ส่ง" อีกครั้ง (เมลส่วนตัวใช้ไม่ได้นะ)</p>
+        <button class="btn primary" type="submit">ส่งเรื่อง</button>
+        <p class="report-msg" id="report-msg" role="status"></p>
+        <p class="report-care">ถ้าเป็นเรื่องด่วน หรือรู้สึกไม่ไหว คุยกับครูที่ไว้ใจได้เลย หรือโทร <a href="tel:1323">สายด่วนสุขภาพจิต 1323</a> ฟรี ตลอด 24 ชม.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">สภานักเรียนถาวรานุกูล</div>
+    <a class="ig" href="https://www.facebook.com/THNSCC/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7H16.5l.5-4h-3.5V8.8c0-.5.3-.8 1-.8z"/></svg><span>ติดตามผลงานใน Facebook</span></a>
+    <button class="share" id="share-btn" type="button">คัดลอกลิงก์เว็บสภาฯ</button>
+    <small>STUDENT COUNCIL · 2026</small>
+  </div>
+</footer>
+
+<script>
+// photos fall back to an initial when the file is missing
+document.querySelectorAll(".photo img").forEach(img=>{
+  const fallback=()=>{const box=img.parentElement;box.innerHTML='<span class="mono">'+box.dataset.initial+'</span>';};
+  if(img.complete && img.naturalWidth===0) fallback(); else img.addEventListener("error",fallback);
+});
+
+// mobile menu
+const links=document.getElementById("lnav");
+
+// highlight current section in nav
+const navA=links.querySelectorAll('a[href^="#"]');
+const secs=[...document.querySelectorAll("main section[id]")];
+function spy(){
+  // หัวข้อที่อยู่ช่วงบนของจอคือหัวข้อปัจจุบัน ถ้าเลื่อนสุดหน้า เลือกหัวข้อสุดท้าย
+  let cur=secs[0];
+  for(const s of secs){if(s.getBoundingClientRect().top<=innerHeight*0.35)cur=s;}
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)cur=secs[secs.length-1];
+  navA.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+cur.id));
+  const ai=[...navA].findIndex(a=>a.getAttribute("href")==="#"+cur.id);
+  if(ai>=0&&window.LNav)LNav.set(ai);
+}
+addEventListener("scroll",spy,{passive:true});addEventListener("resize",spy);spy();
+
+// copy link
+const share=document.getElementById("share-btn");
+share.addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText(location.href);share.textContent="คัดลอกลิงก์แล้ว";}
+  catch(e){share.textContent=location.href;}
+  setTimeout(()=>share.textContent="คัดลอกลิงก์เว็บสภาฯ",2200);
+});
+
+// ---------- effects ----------
+(function(){
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (calm) return;
+
+  // notes below the first screen stick on as they scroll in; the ones already visible stay put
+  const notes = document.querySelectorAll(".panel .head,.member,.policy,.report-promise,.roster,footer .wrap");
+  const io = new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target; io.unobserve(el);
+    el.classList.remove("fx-wait"); el.classList.add("fx-in");
+    el.addEventListener("animationend",()=>el.classList.remove("fx-in"),{once:true});
+  }),{threshold:.15});
+  let i=0;
+  notes.forEach(el=>{
+    if (el.getBoundingClientRect().top > innerHeight){
+      el.classList.add("fx-wait");
+      el.style.animationDelay = (i++ % 3) * 70 + "ms";
+      io.observe(el);
+    }
+  });
+
+
+  // 886 counts up when the thank-you note comes into view
+  const num=document.querySelector(".votes .num");
+  if (num){
+    const target=parseInt(num.textContent,10);
+    const run=()=>{const t0=performance.now();const tick=t=>{const p=Math.min(1,(t-t0)/1400);num.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);};
+    const vo=new IntersectionObserver(es=>{if(es[0].isIntersecting){vo.disconnect();run();}},{threshold:.6});
+    vo.observe(num);
+  }
+
+  // hero logo tilts toward the pointer
+  const logo=document.querySelector(".logo-note");
+  if (logo && matchMedia("(hover:hover)").matches){
+    const art=logo.parentElement;
+    art.addEventListener("pointermove",e=>{
+      const r=art.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      logo.style.animation="none";
+      logo.style.transform=`perspective(700px) rotateY(${x*14}deg) rotateX(${-y*14}deg) rotate(3deg)`;
+    });
+    art.addEventListener("pointerleave",()=>{logo.style.transform="";logo.style.animation="";});
+  }
+})();
+// ============ แจ้งปัญหา ============
+// กด "ส่งเรื่อง" แล้วจะเปิด Google Form ของสภาฯ ที่กรอกข้อความไว้ให้แล้ว (ต้องล็อกอินเมลโรงเรียน)
+// ถ้าเปลี่ยนฟอร์ม ให้แก้ลิงก์และเลข entry ตรงนี้ (ดูได้จาก "รับลิงก์ที่กรอกไว้ล่วงหน้า")
+const reportForm = {
+  url: "https://docs.google.com/forms/d/e/1FAIpQLSc0mvgRWGWyd1-Zg71gyqTfBg0aOhptjlvUa2WNzpPGoI_ADw/viewform",
+  topic: "entry.386258863",
+  detail: "entry.1742901883",
+  room: "entry.312438719",
+  contact: "entry.667113409"
+};
+const rf=document.getElementById("report-form"), rmsg=document.getElementById("report-msg");
+rf.addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=Object.fromEntries(new FormData(rf));
+  const q=new URLSearchParams({usp:"pp_url"});
+  ["topic","detail","room","contact"].forEach(k=>{if(v[k])q.append(reportForm[k],v[k]);});
+  const link=reportForm.url+"?"+q.toString();
+  const w=window.open(link,"_blank");
+  if(w) w.opener=null; else location.href=link;
+  rmsg.textContent="เปิด Google Form ให้แล้ว ล็อกอินเมลโรงเรียน แล้วกด \"ส่ง\" อีกครั้งนะ 🤍";
+});
+// ไม่ให้ชื่อขาดกลางคำ: ตัดบรรทัดได้แค่ตรงช่องว่าง
+document.querySelectorAll(".member h3,.member .role,.person h3").forEach(h=>{
+  const words=h.textContent.trim().split(/\s+/);
+  h.textContent="";
+  words.forEach((w,i)=>{const s=document.createElement("span");s.style.whiteSpace="nowrap";s.textContent=w;h.append(s);if(i<words.length-1)h.append(" ");});
+});
+</script>
+<div class="pm" id="pm" aria-hidden="true"><div class="pm-box" role="dialog" aria-modal="true" aria-labelledby="pm-t"><button class="pm-x" type="button" aria-label="ปิด">✕</button><span class="pm-num"></span><div class="pm-ic"></div><h3 id="pm-t"></h3><p class="pm-short"></p><p class="pm-more"></p></div></div>
+<script>
+(function(){
+  const pm=document.getElementById("pm"); if(!pm) return;
+  const q=c=>pm.querySelector(c); let last=null;
+  function close(){pm.classList.remove("show");pm.setAttribute("aria-hidden","true");document.body.style.overflow="";if(last)last.focus()}
+  document.querySelectorAll(".policy").forEach((d,i)=>{
+    d.querySelector("summary").addEventListener("click",e=>{
+      e.preventDefault(); last=e.currentTarget;
+      q(".pm-num").textContent=String(i+1).padStart(2,"0");
+      q(".pm-ic").textContent=d.querySelector(".ic").textContent;
+      q("h3").textContent=d.querySelector("h3").textContent;
+      q(".pm-short").textContent=d.querySelector(".short").textContent;
+      const m=d.querySelector(".more"); q(".pm-more").textContent=m?m.textContent:"";
+      pm.classList.add("show");pm.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+      setTimeout(()=>q(".pm-x").focus(),50);
+    });
+  });
+  q(".pm-x").addEventListener("click",close);
+  pm.addEventListener("click",e=>{if(e.target===pm)close()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&pm.classList.contains("show"))close()});
+})();
+</script>
+<script>
+(function(){
+  const b=document.getElementById("theme-btn"); if(!b) return; const h=document.documentElement;
+  let press=false,drag=false,p=null,sx=0,lastUp=0;
+  const dark=()=>h.dataset.theme==="dark";
+  function paint(){const v=p!==null?p:(dark()?1:0);b.style.setProperty("--p",v);b.classList.toggle("on",v>.5);b.setAttribute("aria-checked",dark());
+    const m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=dark()?"#1c1517":"#f6f3f2";}
+  function set(d){if(d!==dark()){h.classList.add("theme-anim"); if(d) h.dataset.theme="dark"; else delete h.dataset.theme;
+    try{localStorage.setItem("thn-theme",d?"dark":"light")}catch(e){} setTimeout(()=>h.classList.remove("theme-anim"),500);} paint();}
+  b.addEventListener("pointerdown",e=>{try{b.setPointerCapture(e.pointerId)}catch(_){} press=true;drag=false;sx=e.clientX;b.classList.add("press");});
+  b.addEventListener("pointermove",e=>{if(!press||(!drag&&Math.abs(e.clientX-sx)<4))return; drag=true;b.classList.add("dragging");
+    const r=b.getBoundingClientRect(); p=Math.min(1,Math.max(0,(e.clientX-r.left-23)/Math.max(r.width-46,1))); paint();});
+  function up(){if(!press)return; press=false;b.classList.remove("press","dragging"); const d=drag&&p!==null?p>=.5:!dark(); p=null; lastUp=performance.now(); set(d);}
+  b.addEventListener("pointerup",up); b.addEventListener("pointercancel",up);
+  // กดด้วยคีย์บอร์ด (Enter / Space)
+  b.addEventListener("click",()=>{if(performance.now()-lastUp<600)return; set(!dark());});
+  paint();
+})();
+</script>
+<a class="fab" id="fab" href="#report" aria-label="แจ้งปัญหาถึงสภาฯ"><span class="fab-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v4M12 14h.01"/></svg></span>แจ้งปัญหา</a>
+<script>
+(function(){
+  const fab=document.getElementById("fab"),rep=document.getElementById("report"),form=document.getElementById("report-form");
+  if(fab&&rep&&"IntersectionObserver" in window){new IntersectionObserver(es=>es.forEach(e=>fab.classList.toggle("hide",e.isIntersecting)),{threshold:.15}).observe(rep)}
+  function go(){if(!form)return; setTimeout(()=>{form.classList.remove("flash");void form.offsetWidth;form.classList.add("flash");const b=form.querySelector(".tc button");if(b)b.focus({preventScroll:true})},500)}
+  document.querySelectorAll('a[href="#report"]').forEach(a=>a.addEventListener("click",go));
+  if(location.hash==="#report") go();
+})();
+</script>
+<script>
+(function(){
+  const sel=document.querySelector('#report-form select[name="topic"]'); if(!sel) return;
+  const box=document.createElement('div'); box.className='tc'; box.setAttribute('role','radiogroup'); box.setAttribute('aria-label','เลือกหัวข้อ');
+  sel.parentNode.insertBefore(box,sel); box.appendChild(sel); sel.tabIndex=-1; sel.setAttribute('aria-hidden','true');
+  const ems={"ห้องน้ำ":"🚻","อาคาร / สถานที่":"🏫","การเรียน":"📚","กิจกรรม":"🎉","อื่น ๆ":"💬"};
+  const opts=[...sel.options].filter(o=>o.value), btns=[];
+  function sync(){btns.forEach((b,i)=>{const on=opts[i].selected&&!!sel.value;b.setAttribute('aria-checked',on);b.tabIndex=on||(!sel.value&&i===0)?0:-1})}
+  opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','radio');b.textContent=(ems[o.text]?ems[o.text]+' ':'')+o.text;
+    b.addEventListener('click',()=>{sel.value=o.value;sel.dispatchEvent(new Event('change',{bubbles:true}));box.classList.remove('err');sync()});
+    b.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=btns[(i+(e.key==='ArrowRight'?1:-1)+btns.length)%btns.length];n.focus();n.click()}});
+    btns.push(b);box.appendChild(b)});
+  sel.addEventListener('invalid',e=>{e.preventDefault();box.classList.remove('err');void box.offsetWidth;box.classList.add('err');btns[0].focus();box.scrollIntoView({block:'center',behavior:'smooth'})});
+  const lab=box.closest('label'); if(lab) lab.addEventListener('click',e=>{if(!e.target.closest('.tc button')) e.preventDefault()});
+  sel.form&&sel.form.addEventListener('reset',()=>setTimeout(sync,0));
+  sync();
+})();
+</script>
+<script>
+// แตะที่ว่าง หรือเลื่อนจอ แล้วปิดแป้นพิมพ์ (iPhone / iPad)
+(function(){
+  const typing=()=>{const a=document.activeElement;return a&&(a.tagName==="INPUT"||a.tagName==="TEXTAREA")?a:null};
+  const isField=t=>t&&t.closest&&t.closest("input,textarea,select,label");
+  let sy=null,sx=0;
+  document.addEventListener("touchstart",e=>{const a=typing(); if(!a){sy=null;return} sy=e.touches[0].clientY; sx=e.touches[0].clientX;
+    if(!isField(e.target)&&!(e.target.closest&&e.target.closest("button,a"))) a.blur();},{passive:true});
+  document.addEventListener("touchmove",e=>{const a=typing(); if(!a||sy===null) return; if(Math.abs(e.touches[0].clientY-sy)>40&&!a.contains(e.target)) {a.blur(); sy=null}},{passive:true});
+  document.addEventListener("mousedown",e=>{const a=typing(); if(a&&!isField(e.target)) a.blur()});
+  document.querySelectorAll("#report-form input").forEach(i=>{i.setAttribute("enterkeyhint","done"); i.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); i.blur()}})});
+})();
+</script>
+<script>
+// ===== แถบเมนูแก้วน้ำ (liquid glass) — ดัดแปลงจาก Nimbus UI "Waterline" by guglielmogiannattasio.it =====
+(function(){
+const nav=document.getElementById("lnav");if(!nav)return;
+const PAD=14;
+const items=[...nav.querySelectorAll(".lnav-item")];
+const icons=items.map(a=>a.querySelector(".nv-ico"));
+const cv=nav.querySelector(".lnav-water"),dropEl=nav.querySelector(".lnav-drop");
+let current=Math.max(0,items.findIndex(a=>a.hasAttribute("aria-current")));
+let lock=0;
+const VERT="attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
+const FRAG=`precision highp float;
+uniform vec2 uRes;uniform float uDpr;uniform float uTime;uniform vec4 uPill;
+uniform vec4 uBlob[6];uniform float uSy[6];uniform vec4 uRip[6];uniform vec3 uMouse;uniform float uDark;uniform float uAmb;
+float sdRB(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return length(max(q,0.))+min(max(q.x,q.y),0.)-r;}
+float sdCap(vec2 p,vec4 B,float sy){p-=B.xy;p.y/=sy;p.x=max(abs(p.x)-B.z,0.);return(length(p)-B.w)*min(1.,sy);}
+float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
+float dropD(vec2 p){float d=1e4;for(int i=0;i<6;i++){if(uBlob[i].w>.5){d=smin(d,sdCap(p,uBlob[i],uSy[i]),13.);}}return d;}
+float pillD(vec2 p){vec2 h=uPill.zw*.5;return sdRB(p-uPill.xy-h,h,h.y);}
+float lens(float d,float w){float t=clamp(-d/w,0.,1.);return sqrt(1.-(1.-t)*(1.-t));}
+float waves(vec2 p){float w=0.;
+ for(int i=0;i<6;i++){vec4 R=uRip[i];if(R.w>0.){float x=length(p-R.xy)-R.z*240.;w+=R.w*exp(-R.z*1.7)*sin(x*.3)*exp(-x*x/700.);}}
+ vec2 m=p-uMouse.xy;w+=uMouse.z*3.6*exp(-dot(m,m)/1000.);
+ w+=uAmb*(sin(p.x*.05+uTime*1.2)*.45+sin(p.x*.13-uTime*.85+p.y*.2)*.25);return w;}
+float H(vec2 p){float dp=pillD(p);return lens(dp,uPill.w*.36)*2.4+lens(dropD(p),11.)*7.5+waves(p)*smoothstep(0.,7.,-dp);}
+float caus(vec2 p,float t){vec2 q=p;float c=0.;for(int i=0;i<3;i++){q+=vec2(sin(q.y*1.1+t),cos(q.x*1.3-t*.7))*.6;c+=1./(1.+16.*abs(sin(q.x)*sin(q.y)));}return c/3.;}
+void main(){
+ vec2 p=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;
+ float dp=pillD(p);float dd=dropD(p);
+ float h0=H(p);vec3 n=normalize(vec3(h0-H(p+vec2(1.,0.)),h0-H(p+vec2(0.,1.)),1.));
+ vec3 V=vec3(0.,0.,1.);
+ float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
+ float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
+ float fres=clamp((1.-n.z)*4.,0.,1.);
+ vec3 irid=.5+.5*cos(6.2831*(vec3(0.,.33,.67)+fres*.85+p.x*.0028+uTime*.035));
+ irid=mix(irid,vec3(1.,.72,.76),.6);
+ float pm=smoothstep(1.,-1.,dp);float dm=smoothstep(1.,-1.,dd)*smoothstep(1.,-2.,dp);
+ float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.11+.07*uDark);
+ vec3 c=vec3(.36,.02,.07)*sh;float a=sh;
+ float pa=clamp(pm*(fres*.5+spec*.9+spec2),0.,1.);
+ c=mix(vec3(1.),irid,.4*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
+ float th=lens(dd,11.);
+ float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
+ vec3 tint=mix(vec3(1.,.9,.92),vec3(1.,.55,.6),uDark);
+ float rim=dm*(1.-smoothstep(0.,8.,-dd));
+ float cres=dm*smoothstep(.12,.55,dot(n.xy,normalize(vec2(.55,.85))))*smoothstep(0.,3.,-dd);
+ float body=.5+.5*clamp(-n.y*3.,-1.,1.);
+ float da=dm*(.3+.14*body)*(1.-.35*uDark);vec3 dc=mix(tint,vec3(1.),body*.6);
+ float la=rim*.26;vec3 lc=mix(vec3(.82,.12,.21),vec3(.95,.3,.38),uDark);dc=lc*la+dc*da*(1.-la);da=la+da*(1.-la);
+ la=clamp(cres*.7+smoothstep(.6,1.,cs)*.28*th*dm,0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
+ la=clamp(dm*(spec*1.2+spec2*.5),0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
+ la=dm*smoothstep(-2.,0.,dd)*.4;dc=mix(vec3(1.),irid,.35)*la+dc*(1.-la);da=la+da*(1.-la);
+ c=dc+c*(1.-da);a=da+a*(1.-da);
+ gl_FragColor=vec4(c,a);
+}`;
+const s={a:{x:0,v:0},b:{x:0,v:0},sy:{s:1,v:0},lead:0,lagFrom:0,sats:[],rips:[],t:{x:0,cy:0,q:0,r:21},q:0,
+  mouse:{x:0,y:0,s:0,on:false},moving:false,split:false,ready:false,w:0,h:0,visible:true,reduce:false,raf:0,last:0,time:0,glc:null};
+const isDark=()=>document.documentElement.getAttribute("data-theme")==="dark"?1:0;
+
+function initGL(canvas){
+  let gl;try{gl=canvas.getContext("webgl",{premultipliedAlpha:true,alpha:true,antialias:false})}catch(e){}
+  if(!gl)return null;
+  const sh=(t,src)=>{const x=gl.createShader(t);gl.shaderSource(x,src);gl.compileShader(x);return gl.getShaderParameter(x,gl.COMPILE_STATUS)?x:null};
+  const vs=sh(gl.VERTEX_SHADER,VERT),fs=sh(gl.FRAGMENT_SHADER,FRAG);if(!vs||!fs)return null;
+  const p=gl.createProgram();gl.attachShader(p,vs);gl.attachShader(p,fs);gl.linkProgram(p);
+  if(!gl.getProgramParameter(p,gl.LINK_STATUS))return null;
+  gl.useProgram(p);
+  gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(p,"a");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const u={};["uRes","uDpr","uTime","uPill","uBlob","uSy","uRip","uMouse","uDark","uAmb"].forEach(n=>u[n]=gl.getUniformLocation(p,n));
+  return {gl,u};
+}
+function supportsRefraction(){
+  const ua=navigator.userAgent;
+  return /Chrome\/|Chromium\/|Edg\//.test(ua)&&!/Firefox\/|Mobile|Android/.test(ua)&&!!(window.CSS&&CSS.supports&&CSS.supports("backdrop-filter","url(#a)"));
+}
+
+function draw(){
+  const T=s.t,sep=Math.abs(s.a.x-s.b.x),thin=Math.min(sep/(2*(s.q+T.r)||1),1),r=T.r*(1-.3*thin);
+  if(s.glc){
+    const g=s.glc.gl,u=s.glc.u,dpr=Math.min(window.devicePixelRatio||1,2);
+    g.viewport(0,0,g.drawingBufferWidth,g.drawingBufferHeight);
+    g.uniform2f(u.uRes,s.w+PAD*2,s.h+PAD*2);g.uniform1f(u.uDpr,dpr);g.uniform1f(u.uTime,s.time);
+    g.uniform4f(u.uPill,PAD,PAD,s.w,s.h);
+    const blobs=new Float32Array(24),sy=new Float32Array(6).fill(1);
+    const head=s.lead===0?s.a:s.b,tail=s.lead===0?s.b:s.a;
+    blobs.set([head.x,T.cy,s.q*(1-.25*thin),T.r*(1-.12*thin),tail.x,T.cy,s.q*(1-.8*thin),T.r*(1-.5*thin)],0);
+    sy[0]=sy[1]=s.sy.s;
+    s.sats.slice(0,4).forEach((d,i)=>blobs.set([d.x,d.y,0,d.r],8+i*4));
+    g.uniform4fv(u.uBlob,blobs);g.uniform1fv(u.uSy,sy);
+    const rips=new Float32Array(24);s.rips.slice(-6).forEach((p,i)=>rips.set([p.x,p.y,p.age,p.amp],i*4));
+    g.uniform4fv(u.uRip,rips);
+    g.uniform3f(u.uMouse,s.mouse.x,s.mouse.y,s.mouse.s);g.uniform1f(u.uDark,isDark());g.uniform1f(u.uAmb,s.reduce?0:1);
+    g.clearColor(0,0,0,0);g.clear(g.COLOR_BUFFER_BIT);g.drawArrays(g.TRIANGLES,0,3);
+  }else{
+    const left=Math.min(s.a.x,s.b.x)-s.q-r-PAD,width=sep+2*(s.q+r);
+    dropEl.style.width=width+"px";dropEl.style.transform="translateX("+left+"px) scaleY("+s.sy.s+")";
+  }
+}
+function step(dt,now){
+  const T=s.t;s.time+=dt;s.q+=(T.q-s.q)*Math.min(1,dt*12);
+  const bodies=[s.a,s.b];let still=true;
+  if(s.reduce){s.a.x=s.b.x=T.x;s.a.v=s.b.v=0;s.sy.s=1;s.sats=[];}
+  else{
+    bodies.forEach((B,i)=>{
+      const lead=i===s.lead,k=lead?210:72,c=lead?25:13,f=!lead&&now<s.lagFrom?.08:1;
+      B.v+=(k*(T.x-B.x)-c*B.v)*dt*f;B.x+=B.v*dt;
+      const lo=PAD+6+s.q+T.r-3,hi=PAD+s.w-6-s.q-T.r+3;
+      if(B.x<lo||B.x>hi){s.sy.v-=Math.min(Math.abs(B.v),900)*.0016;B.x=Math.max(lo,Math.min(hi,B.x));B.v*=-.25;}
+      if(Math.abs(T.x-B.x)>.3||Math.abs(B.v)>3)still=false;
+    });
+    const L=bodies[s.lead],syT=1-.2*Math.min(Math.abs(L.v)/1500,1);
+    s.sy.v+=(280*(syT-s.sy.s)-9*s.sy.v)*dt;s.sy.s+=s.sy.v*dt;
+    if(Math.abs(s.sy.s-1)>.002||Math.abs(s.sy.v)>.02)still=false;
+    const sep=Math.abs(s.a.x-s.b.x),r=T.r*(1-.3*Math.min(sep/(2*(T.q+T.r)||1),1));
+    if(!s.split&&s.moving&&sep-2*T.q-2*r>-6){
+      s.split=true;const lo=bodies[1-s.lead],hi=bodies[s.lead];
+      [.3,.5,.72].forEach((t,j)=>s.sats.push({x:lo.x+(hi.x-lo.x)*t+(Math.random()-.5)*6,y:T.cy+(Math.random()-.5)*10,
+        vx:(lo.v+hi.v)*.45,vy:(Math.random()-.5)*60,r:5+Math.random()*3-j*.5,k:70+Math.random()*90}));
+    }
+    s.sats=s.sats.filter(d=>{
+      d.vx+=(d.k*(T.x-d.x)-9*d.vx)*dt;d.vy+=(90*(T.cy-d.y)-7*d.vy)*dt;d.x+=d.vx*dt;d.y+=d.vy*dt;
+      d.x=Math.max(PAD+8+d.r,Math.min(PAD+s.w-8-d.r,d.x));d.y=Math.max(T.cy-T.r+d.r,Math.min(T.cy+T.r-d.r,d.y));
+      if(Math.abs(T.x-d.x)<T.q+T.r*.5)d.r-=dt*26;return d.r>.6;
+    });
+    if(s.sats.length)still=false;
+  }
+  if(s.moving&&still){s.moving=false;if(s.split||!s.reduce)s.rips.push({x:T.x,y:T.cy,age:0,amp:s.split?1.2:.7});}
+  s.rips.forEach(p=>p.age+=dt);s.rips=s.rips.filter(p=>p.age<2.4);
+  s.mouse.s+=((s.mouse.on?1:0)-s.mouse.s)*Math.min(1,dt*7);
+}
+function loop(){
+  if(s.raf)return;s.last=performance.now();
+  const tick=now=>{
+    const dt=Math.min((now-s.last)/1000,1/30);s.last=now;step(dt,now);draw();
+    const busy=s.moving||s.rips.length||s.sats.length||s.mouse.s>.01;
+    if(s.visible&&(!s.reduce||busy))s.raf=requestAnimationFrame(tick);else s.raf=0;
+  };
+  s.raf=requestAnimationFrame(tick);
+}
+function measure(){
+  const el=items[current];if(!el)return;
+  s.w=nav.offsetWidth;s.h=nav.offsetHeight;
+  const T=s.t;T.r=el.offsetHeight/2;T.q=Math.max(0,el.offsetWidth/2-T.r);T.cy=PAD+el.offsetTop+el.offsetHeight/2;
+  const nx=PAD+el.offsetLeft+el.offsetWidth/2;
+  if(!s.ready){s.a.x=s.b.x=nx;s.q=T.q;s.ready=true;}
+  else if(Math.abs(nx-T.x)>.5){s.lead=Math.abs(nx-s.a.x)<=Math.abs(nx-s.b.x)?0:1;s.lagFrom=performance.now()+70;s.moving=true;s.split=false;}
+  T.x=nx;
+  const dpr=Math.min(window.devicePixelRatio||1,2),W=s.w+PAD*2,Hh=s.h+PAD*2;
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(Hh*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(Hh*dpr);cv.style.width=W+"px";cv.style.height=Hh+"px";}
+  loop();
+}
+function setActive(i){
+  if(i<0||i>=items.length||i===current)return;
+  current=i;items.forEach((a,j)=>j===i?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  measure();
+}
+const local=(x,y)=>{const r=nav.getBoundingClientRect();return {x:x-r.left+PAD,y:y-r.top+PAD}};
+function ripple(x,y,amp){if(s.reduce)return;s.rips.push({x,y,age:0,amp});loop();}
+function play(i){
+  const ic=icons[i];if(!ic)return;
+  icons.forEach(x=>x&&x!==ic&&x.removeAttribute("data-fx"));
+  ic.removeAttribute("data-fx");void ic.offsetWidth;ic.setAttribute("data-fx",ic.dataset.kind||"pop");
+  if(ic.dataset.kind==="drop"){const b=ic.getBoundingClientRect(),c=local(b.left+b.width/2,0);setTimeout(()=>ripple(c.x,s.t.cy,1.4),430);}
+}
+items.forEach((a,i)=>a.addEventListener("click",()=>{lock=performance.now()+1200;play(i);setActive(i);}));
+nav.addEventListener("keydown",e=>{
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();
+  const n=(current+(e.key==="ArrowRight"?1:-1)+items.length)%items.length;play(n);setActive(n);items[n].focus();
+});
+nav.addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const p=local(e.clientX,e.clientY);s.mouse.x=p.x;s.mouse.y=p.y;s.mouse.on=true;loop();});
+nav.addEventListener("pointerleave",()=>{s.mouse.on=false;loop();});
+nav.addEventListener("pointerdown",e=>{const p=local(e.clientX,e.clientY);ripple(p.x,p.y,.8);});
+
+nav.dataset.refract=supportsRefraction()?"on":"off";
+s.reduce=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+s.glc=initGL(cv);nav.dataset.gl=s.glc?"on":"off";
+cv.addEventListener("webglcontextlost",e=>{e.preventDefault();s.glc=null;nav.dataset.gl="off";loop();});
+if("IntersectionObserver" in window)new IntersectionObserver(([e])=>{s.visible=e.isIntersecting;if(s.visible)loop();}).observe(nav);
+document.addEventListener("visibilitychange",()=>{s.visible=document.visibilityState==="visible";if(s.visible)loop();});
+let lastW=-1;
+const re=()=>{const w=nav.offsetWidth;if(w!==lastW){lastW=w;s.ready=false;measure();}};
+if("ResizeObserver" in window)new ResizeObserver(re).observe(nav);else addEventListener("resize",re);
+new MutationObserver(loop).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{s.ready=false;measure();});
+measure();
+// ให้ส่วนอื่นของหน้าเลื่อนหยดน้ำได้ (ตอนเลื่อนจอ)
+window.LNav={set(i){if(performance.now()<lock)return;setActive(i);}};
+})();
+</script>
+<script>
+/* make the flags in the hero photo wave */
+(function(){
+  var fr=document.querySelector(".hx-frame"), cv=fr&&fr.querySelector(".hx-wave"), sh=fr&&fr.querySelector(".hx-shade");
+  if(!cv||!cv.getContext||matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // flag areas in photos/hero.jpg (pixels): x0,y0,x1(pole side),y1, strength
+  var F=[[720,266,808,402,1],[668,478,778,592,.55],[740,444,782,490,.8],[586,333,620,380,.7],[340,172,386,238,.7],[862,566,931,690,.5]];
+  var g=cv.getContext("2d"), img=new Image(), L=null, run=true, seen=true, last=0;
+  function split(v){var o=[],d=0,b="";for(var i=0;i<v.length;i++){var c=v[i];if(c=="(")d++;if(c==")")d--;if(c==","&&!d){o.push(b.trim());b="";}else b+=c;}o.push(b.trim());return o;}
+  function num(v,free){v=v.trim();return v.slice(-1)=="%"?free*parseFloat(v)/100:parseFloat(v)||0;}
+  function layout(){
+    var cs=getComputedStyle(fr), bi=split(cs.backgroundImage), bp=split(cs.backgroundPosition), bs=split(cs.backgroundSize), k=-1;
+    for(var i=0;i<bi.length;i++) if(bi[i].indexOf("hero.jpg")>-1){k=i;break;}
+    if(k<0) return false;
+    var w=fr.clientWidth, h=fr.clientHeight, iw=img.naturalWidth, ih=img.naturalHeight;
+    var sc=Math.max(w/iw,h/ih), dw=iw*sc, dh=ih*sc, pos=(bp[k]||"50% 50%").split(/\s+/);
+    sh.style.backgroundImage=bi.slice(0,k).join(",");
+    sh.style.backgroundPosition=bp.slice(0,k).join(",");
+    sh.style.backgroundSize=bs.slice(0,k).join(",");
+    sh.style.backgroundRepeat="no-repeat";
+    var r=Math.min(devicePixelRatio||1,2);
+    cv.width=Math.round(w*r); cv.height=Math.round(h*r);
+    L={s:sc*r, x:num(pos[0],w-dw)*r, y:num(pos[1]||"50%",h-dh)*r};
+    g.drawImage(img,L.x,L.y,dw*r,dh*r);
+    return true;
+  }
+  function frame(t){
+    if(!L) return; var s=t/1000;
+    for(var n=0;n<F.length;n++){
+      var f=F[n], x0=f[0], y0=f[1], x1=f[2], y1=f[3], fw=x1-x0, fh=y1-y0, A=fh*.045*f[4];
+      var cw=3, ch=4;
+      for(var x=x0;x<x1;x+=cw){
+        var k=(x1-x)/fw, ph=(x1-x)*.09-s*3.6;
+        for(var y=y0;y<y1;y+=ch){
+          var v=(y-y0)/fh, e=Math.sin(Math.PI*v);
+          var d=A*k*e*(Math.sin(ph+v*1.2)+.35*Math.sin(ph*.55+2.1));
+          g.drawImage(img,x,y-d,cw,ch,L.x+x*L.s,L.y+y*L.s,cw*L.s+.5,ch*L.s+.5);
+        }
+      }
+    }
+  }
+  function loop(t){ requestAnimationFrame(loop); if(!run||t-last<30) return; last=t; frame(t); }
+  img.onload=function(){
+    if(!layout()) return;
+    fr.classList.add("waving"); cv.classList.add("on");
+    var to; addEventListener("resize",function(){clearTimeout(to);to=setTimeout(layout,120);});
+    if("IntersectionObserver" in window) new IntersectionObserver(function(e){seen=e[0].isIntersecting;run=seen&&!document.hidden;}).observe(fr);
+    document.addEventListener("visibilitychange",function(){run=seen&&!document.hidden;});
+    requestAnimationFrame(loop);
+  };
+  img.src="photos/hero.jpg";
+})();
+</script>
+<script>
+// ปุ่มน้ำใส: ระลอกน้ำตอนกด
+(function(){
+  const ua=navigator.userAgent, refr=/Chrome\/|Edg\//.test(ua)&&!/Mobile|Android|Firefox/.test(ua)&&window.CSS&&CSS.supports&&CSS.supports("backdrop-filter","url(#a)");
+  document.querySelectorAll(".lbtn").forEach(b=>{
+    if(refr) b.dataset.refract="on";
+    b.addEventListener("pointerdown",e=>{
+      if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const r=b.getBoundingClientRect(), s=document.createElement("span");
+      s.className="lbtn-rip"; s.style.left=(e.clientX-r.left)+"px"; s.style.top=(e.clientY-r.top)+"px";
+      b.appendChild(s); s.addEventListener("animationend",()=>s.remove());
+    });
+  });
+})();
+</script>
+</body>
+</html>
